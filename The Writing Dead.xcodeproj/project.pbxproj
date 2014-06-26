@@ -1,0 +1,458 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4F6A31A3195CD66D00D3319A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6A31A2195CD66D00D3319A /* main.swift */; };
+		4F6A31A5195CD66D00D3319A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6A31A4195CD66D00D3319A /* AppDelegate.swift */; };
+		4F6A31A7195CD66D00D3319A /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6A31A6195CD66D00D3319A /* GameScene.swift */; };
+		4F6A31A9195CD66D00D3319A /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A31A8195CD66D00D3319A /* GameScene.sks */; };
+		4F6A31AB195CD66D00D3319A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A31AA195CD66D00D3319A /* Images.xcassets */; };
+		4F6A31AE195CD66D00D3319A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A31AC195CD66D00D3319A /* MainMenu.xib */; };
+		4F6A31BA195CD66D00D3319A /* The_Writing_DeadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6A31B9195CD66D00D3319A /* The_Writing_DeadTests.swift */; };
+		4F6A31C9195CD6B700D3319A /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6A31C3195CD6B700D3319A /* Character.swift */; };
+		4F6A31CA195CD6B700D3319A /* Zombie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6A31C4195CD6B700D3319A /* Zombie.swift */; };
+		4F6A31CB195CD6B700D3319A /* Librarian.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6A31C5195CD6B700D3319A /* Librarian.swift */; };
+		4F6A31CC195CD6B700D3319A /* Cat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6A31C6195CD6B700D3319A /* Cat.swift */; };
+		4F6A31CD195CD6B700D3319A /* Words.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6A31C7195CD6B700D3319A /* Words.swift */; };
+		4F6A31CE195CD6B700D3319A /* Words.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A31C8195CD6B700D3319A /* Words.plist */; };
+		4F6A31D2195CD6D800D3319A /* Librarian.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A31CF195CD6D800D3319A /* Librarian.xcassets */; };
+		4F6A31D3195CD6D800D3319A /* Zombie.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A31D0195CD6D800D3319A /* Zombie.xcassets */; };
+		4F6A31D4195CD6D800D3319A /* Cat.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A31D1195CD6D800D3319A /* Cat.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4F6A31B4195CD66D00D3319A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4F6A3195195CD66D00D3319A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4F6A319C195CD66D00D3319A;
+			remoteInfo = "The Writing Dead";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		4F6A319D195CD66D00D3319A /* The Writing Dead.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "The Writing Dead.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F6A31A1195CD66D00D3319A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4F6A31A2195CD66D00D3319A /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		4F6A31A4195CD66D00D3319A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		4F6A31A6195CD66D00D3319A /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		4F6A31A8195CD66D00D3319A /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		4F6A31AA195CD66D00D3319A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		4F6A31AD195CD66D00D3319A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		4F6A31B3195CD66D00D3319A /* The Writing DeadTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "The Writing DeadTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F6A31B8195CD66D00D3319A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4F6A31B9195CD66D00D3319A /* The_Writing_DeadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = The_Writing_DeadTests.swift; sourceTree = "<group>"; };
+		4F6A31C3195CD6B700D3319A /* Character.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
+		4F6A31C4195CD6B700D3319A /* Zombie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Zombie.swift; sourceTree = "<group>"; };
+		4F6A31C5195CD6B700D3319A /* Librarian.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Librarian.swift; sourceTree = "<group>"; };
+		4F6A31C6195CD6B700D3319A /* Cat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cat.swift; sourceTree = "<group>"; };
+		4F6A31C7195CD6B700D3319A /* Words.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Words.swift; sourceTree = "<group>"; };
+		4F6A31C8195CD6B700D3319A /* Words.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Words.plist; sourceTree = "<group>"; };
+		4F6A31CF195CD6D800D3319A /* Librarian.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Librarian.xcassets; sourceTree = "<group>"; };
+		4F6A31D0195CD6D800D3319A /* Zombie.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Zombie.xcassets; sourceTree = "<group>"; };
+		4F6A31D1195CD6D800D3319A /* Cat.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Cat.xcassets; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4F6A319A195CD66D00D3319A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4F6A31B0195CD66D00D3319A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4F6A3194195CD66D00D3319A = {
+			isa = PBXGroup;
+			children = (
+				4F6A319F195CD66D00D3319A /* The Writing Dead */,
+				4F6A31B6195CD66D00D3319A /* The Writing DeadTests */,
+				4F6A319E195CD66D00D3319A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4F6A319E195CD66D00D3319A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4F6A319D195CD66D00D3319A /* The Writing Dead.app */,
+				4F6A31B3195CD66D00D3319A /* The Writing DeadTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4F6A319F195CD66D00D3319A /* The Writing Dead */ = {
+			isa = PBXGroup;
+			children = (
+				4F6A31A4195CD66D00D3319A /* AppDelegate.swift */,
+				4F6A31A6195CD66D00D3319A /* GameScene.swift */,
+				4F6A31A8195CD66D00D3319A /* GameScene.sks */,
+				4F6A31C3195CD6B700D3319A /* Character.swift */,
+				4F6A31C4195CD6B700D3319A /* Zombie.swift */,
+				4F6A31C5195CD6B700D3319A /* Librarian.swift */,
+				4F6A31C6195CD6B700D3319A /* Cat.swift */,
+				4F6A31C7195CD6B700D3319A /* Words.swift */,
+				4F6A31C8195CD6B700D3319A /* Words.plist */,
+				4F6A31AA195CD66D00D3319A /* Images.xcassets */,
+				4F6A31CF195CD6D800D3319A /* Librarian.xcassets */,
+				4F6A31D0195CD6D800D3319A /* Zombie.xcassets */,
+				4F6A31D1195CD6D800D3319A /* Cat.xcassets */,
+				4F6A31AC195CD66D00D3319A /* MainMenu.xib */,
+				4F6A31A0195CD66D00D3319A /* Supporting Files */,
+			);
+			path = "The Writing Dead";
+			sourceTree = "<group>";
+		};
+		4F6A31A0195CD66D00D3319A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4F6A31A1195CD66D00D3319A /* Info.plist */,
+				4F6A31A2195CD66D00D3319A /* main.swift */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4F6A31B6195CD66D00D3319A /* The Writing DeadTests */ = {
+			isa = PBXGroup;
+			children = (
+				4F6A31B9195CD66D00D3319A /* The_Writing_DeadTests.swift */,
+				4F6A31B7195CD66D00D3319A /* Supporting Files */,
+			);
+			path = "The Writing DeadTests";
+			sourceTree = "<group>";
+		};
+		4F6A31B7195CD66D00D3319A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4F6A31B8195CD66D00D3319A /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4F6A319C195CD66D00D3319A /* The Writing Dead */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4F6A31BD195CD66D00D3319A /* Build configuration list for PBXNativeTarget "The Writing Dead" */;
+			buildPhases = (
+				4F6A3199195CD66D00D3319A /* Sources */,
+				4F6A319A195CD66D00D3319A /* Frameworks */,
+				4F6A319B195CD66D00D3319A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "The Writing Dead";
+			productName = "The Writing Dead";
+			productReference = 4F6A319D195CD66D00D3319A /* The Writing Dead.app */;
+			productType = "com.apple.product-type.application";
+		};
+		4F6A31B2195CD66D00D3319A /* The Writing DeadTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4F6A31C0195CD66D00D3319A /* Build configuration list for PBXNativeTarget "The Writing DeadTests" */;
+			buildPhases = (
+				4F6A31AF195CD66D00D3319A /* Sources */,
+				4F6A31B0195CD66D00D3319A /* Frameworks */,
+				4F6A31B1195CD66D00D3319A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4F6A31B5195CD66D00D3319A /* PBXTargetDependency */,
+			);
+			name = "The Writing DeadTests";
+			productName = "The Writing DeadTests";
+			productReference = 4F6A31B3195CD66D00D3319A /* The Writing DeadTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4F6A3195195CD66D00D3319A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0600;
+				ORGANIZATIONNAME = Apple;
+				TargetAttributes = {
+					4F6A319C195CD66D00D3319A = {
+						CreatedOnToolsVersion = 6.0;
+					};
+					4F6A31B2195CD66D00D3319A = {
+						CreatedOnToolsVersion = 6.0;
+						TestTargetID = 4F6A319C195CD66D00D3319A;
+					};
+				};
+			};
+			buildConfigurationList = 4F6A3198195CD66D00D3319A /* Build configuration list for PBXProject "The Writing Dead" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4F6A3194195CD66D00D3319A;
+			productRefGroup = 4F6A319E195CD66D00D3319A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4F6A319C195CD66D00D3319A /* The Writing Dead */,
+				4F6A31B2195CD66D00D3319A /* The Writing DeadTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4F6A319B195CD66D00D3319A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4F6A31CE195CD6B700D3319A /* Words.plist in Resources */,
+				4F6A31D2195CD6D800D3319A /* Librarian.xcassets in Resources */,
+				4F6A31A9195CD66D00D3319A /* GameScene.sks in Resources */,
+				4F6A31D3195CD6D800D3319A /* Zombie.xcassets in Resources */,
+				4F6A31AB195CD66D00D3319A /* Images.xcassets in Resources */,
+				4F6A31D4195CD6D800D3319A /* Cat.xcassets in Resources */,
+				4F6A31AE195CD66D00D3319A /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4F6A31B1195CD66D00D3319A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4F6A3199195CD66D00D3319A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4F6A31CB195CD6B700D3319A /* Librarian.swift in Sources */,
+				4F6A31CC195CD6B700D3319A /* Cat.swift in Sources */,
+				4F6A31A7195CD66D00D3319A /* GameScene.swift in Sources */,
+				4F6A31A5195CD66D00D3319A /* AppDelegate.swift in Sources */,
+				4F6A31A3195CD66D00D3319A /* main.swift in Sources */,
+				4F6A31CD195CD6B700D3319A /* Words.swift in Sources */,
+				4F6A31C9195CD6B700D3319A /* Character.swift in Sources */,
+				4F6A31CA195CD6B700D3319A /* Zombie.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4F6A31AF195CD66D00D3319A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4F6A31BA195CD66D00D3319A /* The_Writing_DeadTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4F6A31B5195CD66D00D3319A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4F6A319C195CD66D00D3319A /* The Writing Dead */;
+			targetProxy = 4F6A31B4195CD66D00D3319A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		4F6A31AC195CD66D00D3319A /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4F6A31AD195CD66D00D3319A /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4F6A31BB195CD66D00D3319A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				METAL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		4F6A31BC195CD66D00D3319A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				METAL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		4F6A31BE195CD66D00D3319A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "The Writing Dead/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		4F6A31BF195CD66D00D3319A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "The Writing Dead/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		4F6A31C1195CD66D00D3319A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/The Writing Dead.app/Contents/MacOS/The Writing Dead";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "The Writing DeadTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				METAL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+			};
+			name = Debug;
+		};
+		4F6A31C2195CD66D00D3319A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/The Writing Dead.app/Contents/MacOS/The Writing Dead";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "The Writing DeadTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				METAL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4F6A3198195CD66D00D3319A /* Build configuration list for PBXProject "The Writing Dead" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4F6A31BB195CD66D00D3319A /* Debug */,
+				4F6A31BC195CD66D00D3319A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4F6A31BD195CD66D00D3319A /* Build configuration list for PBXNativeTarget "The Writing Dead" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4F6A31BE195CD66D00D3319A /* Debug */,
+				4F6A31BF195CD66D00D3319A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		4F6A31C0195CD66D00D3319A /* Build configuration list for PBXNativeTarget "The Writing DeadTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4F6A31C1195CD66D00D3319A /* Debug */,
+				4F6A31C2195CD66D00D3319A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4F6A3195195CD66D00D3319A /* Project object */;
+}

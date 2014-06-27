@@ -86,6 +86,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
 // player setup
         librarian.physicsBody.categoryBitMask = librarianCategory
+        librarian.physicsBody.collisionBitMask   = playfieldCategory | zombieCategory       // touching causes event
 
         addZombie()
         addZombie()
@@ -126,6 +127,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let newCat = Cat(from: librarian.position, direction: librarian.direction)
         newCat.physicsBody.categoryBitMask    = catCategory
         newCat.physicsBody.contactTestBitMask = playfieldCategory | zombieCategory       // touching causes event
+        newCat.physicsBody.collisionBitMask   = playfieldCategory | zombieCategory       // touching causes event
         
         catArray += newCat
         

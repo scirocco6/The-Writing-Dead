@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F45DF20195DF464001D4DF2 /* shh.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4F45DF1F195DF464001D4DF2 /* shh.mp3 */; };
 		4F6A31A3195CD66D00D3319A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6A31A2195CD66D00D3319A /* main.swift */; };
 		4F6A31A5195CD66D00D3319A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6A31A4195CD66D00D3319A /* AppDelegate.swift */; };
 		4F6A31A7195CD66D00D3319A /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6A31A6195CD66D00D3319A /* GameScene.swift */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4F45DF1F195DF464001D4DF2 /* shh.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = shh.mp3; sourceTree = "<group>"; };
 		4F6A319D195CD66D00D3319A /* The Writing Dead.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "The Writing Dead.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F6A31A1195CD66D00D3319A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4F6A31A2195CD66D00D3319A /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				4F6A31CF195CD6D800D3319A /* Librarian.xcassets */,
 				4F6A31D0195CD6D800D3319A /* Zombie.xcassets */,
 				4F6A31D1195CD6D800D3319A /* Cat.xcassets */,
+				4F45DF1F195DF464001D4DF2 /* shh.mp3 */,
 				4F6A31AC195CD66D00D3319A /* MainMenu.xib */,
 				4F6A31A8195CD66D00D3319A /* GameScene.sks */,
 				4F6A31A0195CD66D00D3319A /* Supporting Files */,
@@ -225,6 +228,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F45DF20195DF464001D4DF2 /* shh.mp3 in Resources */,
 				4F6A31CE195CD6B700D3319A /* Words.plist in Resources */,
 				4F6A31D2195CD6D800D3319A /* Librarian.xcassets in Resources */,
 				4F6A31A9195CD66D00D3319A /* GameScene.sks in Resources */,

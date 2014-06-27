@@ -144,9 +144,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         println("shhh happens")
         
         let shhSprite = SKSpriteNode(imageNamed: "Shh")
+
         shhSprite.setScale(0.1)
         shhSprite.position = backGround.position
         addChild(shhSprite)
+        shhSprite.runAction(SKAction.playSoundFileNamed("shh.mp3", waitForCompletion: false))
         bigifyFadeAndVanish(shhSprite)
         
         for zombie in zombieArray {

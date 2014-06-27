@@ -25,7 +25,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let backgroundTexture = SKTexture(imageNamed: "Library")
     var backGround        = SKSpriteNode()
-    var showBackground    = false
+    var showBackground    = true
     
     let scoreBoard = SKLabelNode(fontNamed:"Chalkduster")
     let shhhBoard  = SKLabelNode(fontNamed:"Chalkduster")
@@ -50,13 +50,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         backGround           = SKSpriteNode(texture: backgroundTexture, size: size)
         backGround.position  = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame))
         backGround.zPosition = -1
+        addChild(backGround)
         
         wordBoard.fontSize = 42
         wordBoard.position = CGPointMake(CGRectGetMidX(frame), 25)
         wordBoard.text     = word
-        //wordBoard.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left
-
         addChild(wordBoard)
+        
+        scoreBoard.position = CGPointMake(10, 5)
+        scoreBoard.text     = "Score: \(score)"
+        scoreBoard.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left
+        addChild(scoreBoard)
+        
+        shhhBoard.position = CGPointMake(890, 5)
+        shhhBoard.text     = "\(shh) :shhH"
+        shhhBoard.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left
+        addChild(shhhBoard)
 
         physicsWorld.contactDelegate = self
         
@@ -108,18 +117,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         letter.removeFromParent()
 
         word += letter.text
+        updateWordBoard()
+    }
+    
+    func updateWordBoard() {
         wordBoard.text = word
         
         switch(words.wordValue(word)) {
-            case 0:
-                wordBoard.fontColor = SKColor.redColor()
-            case 1...9:
-                wordBoard.fontColor = SKColor.greenColor()
-            case 10...49:
-                 wordBoard.fontColor = SKColor(red: 0.988, green: 0.851, blue: 0.459, alpha: 1.0)
-            default: ()
+        case 0:
+            wordBoard.fontColor = SKColor.redColor()
+        case 1...9:
+            wordBoard.fontColor = SKColor.greenColor()
+        case 10...49:
+            wordBoard.fontColor = SKColor(red: 0.988, green: 0.851, blue: 0.459, alpha: 1.0)
+        default: ()
         }
-        
     }
     
     func shhh() {
@@ -128,7 +140,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             return()
         }
         shh--
+        shhhBoard.text     = "\(shh) :shhH"
         println("shhh happens")
+        for zombie in zombieArray {
+            zombie.shhh()
+        }
+    }
+    
+    func dropLastLetter() {
+        word = word[word.startIndex..word.endIndex.pred()]
+        wordBoard.text = word
+    }
+    
+    func scoreWord() {
+        let value = words.wordValue(word)
+        if (value == 0) {
+            println("No \(word) for you!!@")
+            return()
+        }
+        
+        println("\(word) is a yummy \(word)")
+        
+        score += value
+        scoreBoard.text = "Score: \(score)"
+        
+        word = ""
+        updateWordBoard()
     }
     
     func toggleBackground() {
@@ -201,7 +238,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 addLetterToWord(letter)
             
             default:
-                println("Unhandled collison??????")
+                println("...ping...")
         }
     }
 }
@@ -231,8 +268,14 @@ extension GameScene {
                 case "2":
                     down ? shhh()  : ()
                 
+                case "n":
+                    down ? dropLastLetter()  : ()
+                
                 case "b":
                     down ? toggleBackground() : ()
+                
+                case "m":
+                    down ? scoreWord() : ()
                 
                 default: ()
             }

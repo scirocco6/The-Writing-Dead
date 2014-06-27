@@ -39,7 +39,7 @@ class Zombie: Character {
     let letterNode = Letter(fontNamed:"Chalkduster") // this will be the letter the zombie is carrying
 
     init(letter: String) {
-        println("The Writing Dead   \(letter) is for BRAINS!!!!@") // the literate dead? The reading dead?
+        println("\t\(letter) is for BRAINS!!!!@") // the literate dead? The reading dead?
         
         super.init(textures: zombieTextures)
         
@@ -66,6 +66,19 @@ class Zombie: Character {
         newDirection != direction ? walk(newDirection) : randomDirection()
 
         return
+    }
+    
+    func shhh() {
+        switch(direction) {
+            case .up:
+                physicsBody.velocity = CGVectorMake(0, gait)
+            case .down:
+                physicsBody.velocity = CGVectorMake(0, gait * -1)
+            case .left:
+                physicsBody.velocity = CGVectorMake(gait * -1, 0)
+            case .right:
+                physicsBody.velocity = CGVectorMake(gait, 0)
+        }
     }
     
     func die() -> SKLabelNode {

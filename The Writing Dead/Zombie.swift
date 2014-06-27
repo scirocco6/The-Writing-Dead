@@ -36,7 +36,7 @@ class Zombie: Character {
         ]
     ]
     
-    let letterNode = Letter(fontNamed:"Chalkduster") // this will be the letter the zombie is carrying
+    let letterNode = Letter(fontNamed:"Dead Font Walking") // this will be the letter the zombie is carrying
 
     init(letter: String) {
         println("\t\(letter) is for BRAINS!!!!@") // the literate dead? The reading dead?
@@ -45,6 +45,7 @@ class Zombie: Character {
         
         physicsBody.linearDamping = -0.3
         
+        setScale(1.10)
         position  = CGPointMake(CGFloat(arc4random_uniform(850)) + 100.0, CGFloat(arc4random_uniform(600)) + 100.0)
         name      = "zombie"
         gait      = 30.0
@@ -52,7 +53,7 @@ class Zombie: Character {
         randomDirection()
         
         letterNode.text      = letter
-        letterNode.fontSize  = 25
+        letterNode.fontSize  = 28
         letterNode.zPosition = zPosition + 1
         addChild(letterNode)
     }

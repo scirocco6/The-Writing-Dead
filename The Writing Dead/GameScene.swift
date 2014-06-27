@@ -22,14 +22,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var score       = 0
     var shh         = 3
     var zombieDelay = 5.0
+    var gameOn      = false
     
     let backgroundTexture = SKTexture(imageNamed: "Library")
     var backGround        = SKSpriteNode()
     var showBackground    = true
     
-    let scoreBoard = SKLabelNode(fontNamed:"Chalkduster")
-    let shhhBoard  = SKLabelNode(fontNamed:"Chalkduster")
-    let wordBoard  = SKLabelNode(fontNamed:"Chalkduster")
+    let titleSplash = SKSpriteNode(imageNamed: "The Writing Dead")
+    let scoreBoard  = SKLabelNode(fontNamed:"Dead Font Walking")
+    let shhhBoard   = SKLabelNode(fontNamed:"Dead Font Walking")
+    let wordBoard   = SKLabelNode(fontNamed:"Dead Font Walking")
 
     let playfieldCategory = UInt32(0x01 << 0)
     let librarianCategory = UInt32(0x01 << 1)
@@ -37,6 +39,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let catCategory       = UInt32(0x01 << 3)
     let letterCategory    = UInt32(0x01 << 4)
     let platformCategory  = UInt32(0x01 << 5)
+    let titleCategory     = UInt32(0x01 << 6)
     
     @lazy var librarianHitPlayfield : UInt32 = self.librarianCategory | self.playfieldCategory
     @lazy var zombieHitPlayfield    : UInt32 = self.zombieCategory    | self.playfieldCategory
@@ -44,6 +47,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     @lazy var catHitPlayfield       : UInt32 = self.catCategory       | self.playfieldCategory
     @lazy var catHitZombie          : UInt32 = self.catCategory       | self.zombieCategory
     @lazy var letterHitPlayfield    : UInt32 = self.letterCategory    | self.playfieldCategory
+    @lazy var zombieHitTitle        : UInt32 = self.zombieCategory    | self.titleCategory
     
     override func didMoveToView(view: SKView) {
 // playfield setup
@@ -51,6 +55,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         backGround.position  = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame))
         backGround.zPosition = -1
         addChild(backGround)
+        
+        titleSplash.position                      = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame) + 100)
+        titleSplash.physicsBody                   = SKPhysicsBody(rectangleOfSize: titleSplash.frame.size)
+        titleSplash.physicsBody.affectedByGravity = false
+        titleSplash.physicsBody.usesPreciseCollisionDetection = true
+        addChild(titleSplash)
         
         wordBoard.fontSize = 42
         wordBoard.position = CGPointMake(CGRectGetMidX(frame), 25)
@@ -76,6 +86,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
 // player setup
         librarian.physicsBody.categoryBitMask = librarianCategory
+
+        addZombie()
+        addZombie()
+    }
+    
+    func startGame() {
+        for zombie in zombieArray { // remove all of the atract mode zombies
+            zombie.removeFromParent()
+        }
+        
+        titleSplash.removeFromParent()
         addChild(librarian)
         addZombie()
     }
@@ -92,14 +113,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(newZombie)
         
         zombieArray += newZombie
-        //
-        // wait a while then add another zombie
-        //
-        runAction(SKAction.waitForDuration(zombieDelay), completion: {self.addZombie()})
         
         if (zombieDelay > 1) {
             zombieDelay -= 0.001 // reduce the delay between new zombies.  This needs play testing badly level/bonus etc should have an effect
         }
+        // wait a while then add another zombie
+        runAction(SKAction.waitForDuration(zombieDelay), completion: {self.addZombie()})
     }
     
     func releaseCat() {
@@ -111,27 +130,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         catArray += newCat
         
         addChild(newCat)
-    }
-    
-    func addLetterToWord(letter: Letter) {
-        letter.removeFromParent()
-
-        word += letter.text
-        updateWordBoard()
-    }
-    
-    func updateWordBoard() {
-        wordBoard.text = word
-        
-        switch(words.wordValue(word)) {
-        case 0:
-            wordBoard.fontColor = SKColor.redColor()
-        case 1...9:
-            wordBoard.fontColor = SKColor.greenColor()
-        case 10...49:
-            wordBoard.fontColor = SKColor(red: 0.988, green: 0.851, blue: 0.459, alpha: 1.0)
-        default: ()
-        }
     }
     
     func shhh() {
@@ -147,9 +145,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    func addLetterToWord(letter: Letter) {
+        letter.removeFromParent()
+        
+        word += letter.text
+        updateWordBoard()
+    }
+    
     func dropLastLetter() {
         word = word[word.startIndex..word.endIndex.pred()]
+        updateWordBoard()
+    }
+    
+    func updateWordBoard() {
         wordBoard.text = word
+        
+        switch(words.wordValue(word)) {
+        case 0:
+            wordBoard.fontColor = SKColor.redColor()
+        case 1...9:
+            wordBoard.fontColor = SKColor.greenColor()
+        case 10...49:
+            wordBoard.fontColor = SKColor(red: 0.988, green: 0.851, blue: 0.459, alpha: 1.0)
+        default: ()
+        }
     }
     
     func scoreWord() {
@@ -196,7 +215,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             case librarianHitPlayfield:
                 println("nope")
             
-            case zombieHitPlayfield:
+            case zombieHitPlayfield, zombieHitTitle:
                 println("grrr Argh")
                 let zombie : Zombie = contact.bodyA.categoryBitMask == zombieCategory ? contact.bodyA.node as Zombie : contact.bodyB.node as Zombie
                 zombie.randomDirection()
@@ -247,6 +266,14 @@ extension GameScene {
     func handleKeyEvent(event: NSEvent, keyDown down: Bool) {
         for character in event.characters.unicodeScalars {
             switch character {
+                case "\\": // actually want this to be return but not sure how to specify that here
+                    if (down && !gameOn) {
+                        startGame()
+                    }
+                    else {
+                        // pause feature goes here
+                    }
+                
                 case "w":
                     down ? librarian.walk(Character.heading.up)    : librarian.stop()
                 

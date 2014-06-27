@@ -142,6 +142,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         shh--
         shhhBoard.text     = "\(shh) :shhH"
         println("shhh happens")
+        
+        let shhSprite = SKSpriteNode(imageNamed: "Shh")
+        shhSprite.setScale(0.1)
+        shhSprite.position = backGround.position
+        addChild(shhSprite)
+        bigifyFadeAndVanish(shhSprite)
+        
         for zombie in zombieArray {
             zombie.shhh()
         }
@@ -198,6 +205,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             showBackground = true
             addChild(backGround)
         }
+    }
+    
+    func bigifyFadeAndVanish(thing: SKSpriteNode) {
+        let bigify = SKAction.scaleTo(10,   duration: 0.5)
+        let fade   = SKAction.fadeOutWithDuration(0.5)
+        thing.runAction(bigify)
+        thing.runAction(fade, completion: {thing.removeFromParent()})
     }
     
     

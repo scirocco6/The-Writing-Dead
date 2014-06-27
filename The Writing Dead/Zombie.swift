@@ -36,18 +36,19 @@ class Zombie: Character {
         ]
     ]
     
-    let letterNode = SKLabelNode(fontNamed:"Chalkduster") // this will be the letter the zombie is carrying
+    let letterNode = Letter(fontNamed:"Chalkduster") // this will be the letter the zombie is carrying
 
     init(letter: String) {
         println("The Writing Dead   \(letter) is for BRAINS!!!!@") // the literate dead? The reading dead?
         
         super.init(textures: zombieTextures)
         
-        physicsBody.linearDamping = -0.2
+        physicsBody.linearDamping = -0.3
         
-        position = CGPointMake(CGFloat(arc4random_uniform(850)) + 100.0, CGFloat(arc4random_uniform(600)) + 100.0)
-        name     = "zombie"
-        gait     = 30.0
+        position  = CGPointMake(CGFloat(arc4random_uniform(850)) + 100.0, CGFloat(arc4random_uniform(600)) + 100.0)
+        name      = "zombie"
+        gait      = 30.0
+        direction = randomHeading()
         randomDirection()
         
         letterNode.text      = letter
@@ -56,8 +57,15 @@ class Zombie: Character {
         addChild(letterNode)
     }
     
+    func randomHeading() -> heading {
+        return(heading.fromRaw(Int(arc4random_uniform(4)))!)
+    }
+    
     func randomDirection() {
-        walk(heading.fromRaw(Int(arc4random_uniform(4)))!)
+        let newDirection = randomHeading()
+        newDirection != direction ? walk(newDirection) : randomDirection()
+
+        return
     }
     
     func die() -> SKLabelNode {

@@ -23,6 +23,7 @@
 		4F6A31D2195CD6D800D3319A /* Librarian.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A31CF195CD6D800D3319A /* Librarian.xcassets */; };
 		4F6A31D3195CD6D800D3319A /* Zombie.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A31D0195CD6D800D3319A /* Zombie.xcassets */; };
 		4F6A31D4195CD6D800D3319A /* Cat.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A31D1195CD6D800D3319A /* Cat.xcassets */; };
+		4FCE2160195CE7C10098D1DD /* Letter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCE215F195CE7C10098D1DD /* Letter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		4F6A31CF195CD6D800D3319A /* Librarian.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Librarian.xcassets; sourceTree = "<group>"; };
 		4F6A31D0195CD6D800D3319A /* Zombie.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Zombie.xcassets; sourceTree = "<group>"; };
 		4F6A31D1195CD6D800D3319A /* Cat.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Cat.xcassets; sourceTree = "<group>"; };
+		4FCE215F195CE7C10098D1DD /* Letter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Letter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,11 +101,11 @@
 			children = (
 				4F6A31A4195CD66D00D3319A /* AppDelegate.swift */,
 				4F6A31A6195CD66D00D3319A /* GameScene.swift */,
-				4F6A31A8195CD66D00D3319A /* GameScene.sks */,
 				4F6A31C3195CD6B700D3319A /* Character.swift */,
 				4F6A31C4195CD6B700D3319A /* Zombie.swift */,
 				4F6A31C5195CD6B700D3319A /* Librarian.swift */,
 				4F6A31C6195CD6B700D3319A /* Cat.swift */,
+				4FCE215F195CE7C10098D1DD /* Letter.swift */,
 				4F6A31C7195CD6B700D3319A /* Words.swift */,
 				4F6A31C8195CD6B700D3319A /* Words.plist */,
 				4F6A31AA195CD66D00D3319A /* Images.xcassets */,
@@ -111,6 +113,7 @@
 				4F6A31D0195CD6D800D3319A /* Zombie.xcassets */,
 				4F6A31D1195CD6D800D3319A /* Cat.xcassets */,
 				4F6A31AC195CD66D00D3319A /* MainMenu.xib */,
+				4F6A31A8195CD66D00D3319A /* GameScene.sks */,
 				4F6A31A0195CD66D00D3319A /* Supporting Files */,
 			);
 			path = "The Writing Dead";
@@ -249,6 +252,7 @@
 				4F6A31CB195CD6B700D3319A /* Librarian.swift in Sources */,
 				4F6A31CC195CD6B700D3319A /* Cat.swift in Sources */,
 				4F6A31A7195CD66D00D3319A /* GameScene.swift in Sources */,
+				4FCE2160195CE7C10098D1DD /* Letter.swift in Sources */,
 				4F6A31A5195CD66D00D3319A /* AppDelegate.swift in Sources */,
 				4F6A31A3195CD66D00D3319A /* main.swift in Sources */,
 				4F6A31CD195CD6B700D3319A /* Words.swift in Sources */,
@@ -443,6 +447,7 @@
 				4F6A31BF195CD66D00D3319A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4F6A31C0195CD66D00D3319A /* Build configuration list for PBXNativeTarget "The Writing DeadTests" */ = {
 			isa = XCConfigurationList;
@@ -451,6 +456,7 @@
 				4F6A31C2195CD66D00D3319A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

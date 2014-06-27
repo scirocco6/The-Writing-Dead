@@ -35,7 +35,7 @@ class Cat: Character {
     init(from: CGPoint, direction: heading) {
         super.init(textures: catTextures)
         
-        physicsBody.linearDamping = -0.4
+        physicsBody.linearDamping = -0.7
 
         position = from
         zPosition = 2

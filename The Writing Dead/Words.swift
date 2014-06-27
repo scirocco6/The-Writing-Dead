@@ -48,9 +48,9 @@ class Words {
         return letter
     }
     
-    func wordValue(word : String) -> Int? {
+    func wordValue(word : String) -> Int {
         if (!wordDict[word]) {
-            return nil
+            return 0
         }
         
         var value = 0

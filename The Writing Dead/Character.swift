@@ -52,17 +52,20 @@ class Character: SKSpriteNode {
         direction = dir
         walking = true
         
+        var speed = physicsBody.velocity.dx > physicsBody.velocity.dy ? physicsBody.velocity.dx : physicsBody.velocity.dy
+        speed = gait > speed ? gait : speed
+        
         runAction(walks[dir], withKey:"walk")
 
         switch(dir) {
             case .up:
-                physicsBody.velocity = CGVectorMake(0, gait)
+                physicsBody.velocity = CGVectorMake(0, speed)
             case .down:
-                physicsBody.velocity = CGVectorMake(0, gait * -1)
+                physicsBody.velocity = CGVectorMake(0, speed * -1)
             case .left:
-                physicsBody.velocity = CGVectorMake(gait * -1, 0)
+                physicsBody.velocity = CGVectorMake(speed * -1, 0)
             case .right:
-                physicsBody.velocity = CGVectorMake(gait, 0)
+                physicsBody.velocity = CGVectorMake(speed, 0)
         }
     }
     

@@ -7,18 +7,30 @@
 //
 
 import SpriteKit
+import QuartzCore // need this to make CIFilter work
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     let words       = Words()
+    var word        = String()
     
     let librarian   = Librarian()
     var zombieArray = Array<Zombie>()
     var catArray    = Array<Cat>()
+    var shelfArray  = Array<SKSpriteNode>()
     
     var level       = 1
     var score       = 0
+    var shh         = 3
     var zombieDelay = 5.0
     
+    let backgroundTexture = SKTexture(imageNamed: "Library")
+    var backGround        = SKSpriteNode()
+    var showBackground    = false
+    
+    let scoreBoard = SKLabelNode(fontNamed:"Chalkduster")
+    let shhhBoard  = SKLabelNode(fontNamed:"Chalkduster")
+    let wordBoard  = SKLabelNode(fontNamed:"Chalkduster")
+
     let playfieldCategory = UInt32(0x01 << 0)
     let librarianCategory = UInt32(0x01 << 1)
     let zombieCategory    = UInt32(0x01 << 2)
@@ -31,19 +43,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     @lazy var zombieHitLibrarian    : UInt32 = self.zombieCategory    | self.librarianCategory
     @lazy var catHitPlayfield       : UInt32 = self.catCategory       | self.playfieldCategory
     @lazy var catHitZombie          : UInt32 = self.catCategory       | self.zombieCategory
-    @lazy var letterHitPlatform     : UInt32 = self.letterCategory    | self.platformCategory
+    @lazy var letterHitPlayfield    : UInt32 = self.letterCategory    | self.playfieldCategory
     
     override func didMoveToView(view: SKView) {
-        // world setup
+// playfield setup
+        backGround           = SKSpriteNode(texture: backgroundTexture, size: size)
+        backGround.position  = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame))
+        backGround.zPosition = -1
+        
+        wordBoard.fontSize = 42
+        wordBoard.position = CGPointMake(CGRectGetMidX(frame), 25)
+        wordBoard.text     = word
+        //wordBoard.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left
+
+        addChild(wordBoard)
+
         physicsWorld.contactDelegate = self
         
-        physicsBody                 = SKPhysicsBody(edgeLoopFromRect: frame)
-        //let newRect = CGRect(x: 0, y: 50, width: 1024, height: 768 - 50)
-        //physicsBody                 = SKPhysicsBody(edgeLoopFromRect: newRect)
+        let newRect                 = CGRect(x: 0, y: 75, width: frame.width, height: frame.height - 75)
+        physicsBody                 = SKPhysicsBody(edgeLoopFromRect: newRect)
         physicsBody.friction        = 0
         physicsBody.categoryBitMask = playfieldCategory
         
-        // player setup
+// player setup
         librarian.physicsBody.categoryBitMask = librarianCategory
         addChild(librarian)
         addZombie()
@@ -58,7 +80,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         newZombie.physicsBody.categoryBitMask    = zombieCategory
         newZombie.physicsBody.contactTestBitMask = playfieldCategory | librarianCategory | zombieCategory   // touching causes event
         
-        
         addChild(newZombie)
         
         zombieArray += newZombie
@@ -68,7 +89,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         runAction(SKAction.waitForDuration(zombieDelay), completion: {self.addZombie()})
         
         if (zombieDelay > 1) {
-            zombieDelay -= 0.1
+            zombieDelay -= 0.001 // reduce the delay between new zombies.  This needs play testing badly level/bonus etc should have an effect
         }
     }
     
@@ -83,6 +104,45 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(newCat)
     }
     
+    func addLetterToWord(letter: Letter) {
+        letter.removeFromParent()
+
+        word += letter.text
+        wordBoard.text = word
+        
+        switch(words.wordValue(word)) {
+            case 0:
+                wordBoard.fontColor = SKColor.redColor()
+            case 1...9:
+                wordBoard.fontColor = SKColor.greenColor()
+            case 10...49:
+                 wordBoard.fontColor = SKColor(red: 0.988, green: 0.851, blue: 0.459, alpha: 1.0)
+            default: ()
+        }
+        
+    }
+    
+    func shhh() {
+        if(shh == 0) {
+            println("No shh for you!!@")
+            return()
+        }
+        shh--
+        println("shhh happens")
+    }
+    
+    func toggleBackground() {
+        if (showBackground) {
+            showBackground = false
+            backGround.removeFromParent()
+        }
+        else {
+            showBackground = true
+            addChild(backGround)
+        }
+    }
+    
+    
     // contacts and collisions
     func didBeginContact(contact: SKPhysicsContact) {
         if ((contact.bodyA.categoryBitMask == zombieCategory) && (contact.bodyB.categoryBitMask == zombieCategory)) {
@@ -96,98 +156,85 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let all = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         
         switch all {
-        case librarianHitPlayfield:
-            println("nope")
+            case librarianHitPlayfield:
+                println("nope")
             
-        case zombieHitPlayfield:
-            println("grrr Argh")
-            let zombie : Zombie = contact.bodyA.categoryBitMask == zombieCategory ? contact.bodyA.node as Zombie : contact.bodyB.node as Zombie
-            zombie.randomDirection()
+            case zombieHitPlayfield:
+                println("grrr Argh")
+                let zombie : Zombie = contact.bodyA.categoryBitMask == zombieCategory ? contact.bodyA.node as Zombie : contact.bodyB.node as Zombie
+                zombie.randomDirection()
             
-        case zombieHitLibrarian:
-            println("BRAINS!!@")
+            case zombieHitLibrarian:
+                println("BRAINS!!@")
             
-        case catHitPlayfield:
-            println("SPLAT!!@")
-            let cat = contact.bodyA.categoryBitMask == catCategory ? contact.bodyA : contact.bodyB
-            cat.node?.removeFromParent()
+            case catHitPlayfield:
+                println("SPLAT!!@")
+                let cat = contact.bodyA.categoryBitMask == catCategory ? contact.bodyA : contact.bodyB
+                cat.node?.removeFromParent()
             
-        case catHitZombie:
-            println("meow meow meow")
-            var cat: Cat
-            var zombie: Zombie
+            case catHitZombie:
+                println("meow meow meow")
+                var cat: Cat
+                var zombie: Zombie
             
-            if (contact.bodyA.categoryBitMask == catCategory) {
-                cat    = contact.bodyA.node as Cat
-                zombie = contact.bodyB.node as Zombie
-            }
-            else {
-                zombie = contact.bodyA.node as Zombie
-                cat    = contact.bodyB.node as Cat
-            }
+                if (contact.bodyA.categoryBitMask == catCategory) {
+                    cat    = contact.bodyA.node as Cat
+                    zombie = contact.bodyB.node as Zombie
+                }
+                else {
+                    zombie = contact.bodyA.node as Zombie
+                    cat    = contact.bodyB.node as Cat
+                }
             
-            let freeLetter = zombie.die()
-            freeLetter.physicsBody = SKPhysicsBody(rectangleOfSize: freeLetter.frame.size)
+                let freeLetter = zombie.die()
+                freeLetter.fontSize = 36
+                freeLetter.physicsBody = SKPhysicsBody(rectangleOfSize: freeLetter.frame.size)
+                freeLetter.physicsBody.categoryBitMask    = letterCategory
+                freeLetter.physicsBody.contactTestBitMask = playfieldCategory
+                addChild(freeLetter)
             
+                cat.removeFromParent()
             
-            addChild(freeLetter)
+            case letterHitPlayfield:
+                println("....................schlorP")
+                let letter = contact.bodyA.categoryBitMask == letterCategory ? contact.bodyA.node as Letter : contact.bodyB.node as Letter
+                addLetterToWord(letter)
             
-            
-            cat.removeFromParent()
-            
-        default:
-            println("...ayup")
+            default:
+                println("Unhandled collison??????")
         }
     }
 }
 
 extension GameScene {
     func handleKeyEvent(event: NSEvent, keyDown down: Bool) {
-        /*
-        if event.modifierFlags & .NumericPadKeyMask {
-        for keyChar in event.charactersIgnoringModifiers.unicodeScalars {
-        switch UInt32(keyChar) {
-        /*
-        case 0xF700:
-        defaultPlayer.moveForward = downOrUp
-        
-        case 0xF702:
-        defaultPlayer.moveLeft = downOrUp
-        
-        case 0xF703:
-        defaultPlayer.moveRight = downOrUp
-        */
-        case 0xF701:
-        librarian.librarianDownWalkForever
-        
-        default: ()
-        }
-        }
-        }
-        */
-        
-        let characters = event.characters
-        for character in characters.unicodeScalars {
+        for character in event.characters.unicodeScalars {
             switch character {
-            case "w":
-                down ? librarian.walk(Character.heading.up)    : librarian.stop()
+                case "w":
+                    down ? librarian.walk(Character.heading.up)    : librarian.stop()
                 
-            case "a":
-                down ? librarian.walk(Character.heading.left)  : librarian.stop()
+                case "a":
+                    down ? librarian.walk(Character.heading.left)  : librarian.stop()
                 
-            case "d":
-                down ? librarian.walk(Character.heading.right) : librarian.stop()
+                case "d":
+                    down ? librarian.walk(Character.heading.right) : librarian.stop()
                 
-            case "s":
-                down ? librarian.walk(Character.heading.down)  : librarian.stop()
+                case "s":
+                    down ? librarian.walk(Character.heading.down)  : librarian.stop()
                 
-            case " ":
-                down ? releaseCat() : ()
+                case " ":
+                    down ? releaseCat() : ()
                 
-            case "z":
-                down ? addZombie()  : ()
+                case "z":
+                    down ? addZombie()  : ()
                 
-            default: ()
+                case "2":
+                    down ? shhh()  : ()
+                
+                case "b":
+                    down ? toggleBackground() : ()
+                
+                default: ()
             }
         }
     }
@@ -199,7 +246,5 @@ extension GameScene {
     override func keyUp(event: NSEvent) {
         handleKeyEvent(event, keyDown: false)
     }
-    
-    
 }
 

@@ -14,19 +14,19 @@ class Words {
     let totalWords  = 0
     var currentWord = String()
     
-    @lazy var currentLetter :String.Index  = self.currentWord.startIndex
+    lazy var currentLetter :String.Index  = self.currentWord.startIndex
 
     
     init() {
         let path = NSBundle.mainBundle().pathForResource("Words", ofType: "plist")
-        let dict = NSDictionary(contentsOfFile: path)
+        let dict = NSDictionary(contentsOfFile: path!)
         
         for key : AnyObject in dict.allKeys {
             let stringKey : String = key as String
             let keyValue : Bool = dict.valueForKey(stringKey) as Bool
             
             wordDict[stringKey] = keyValue
-            wordList += stringKey
+            wordList.append(stringKey)
             totalWords++
         }
         setCurrentWord()
@@ -38,9 +38,9 @@ class Words {
     }
     
     func nextLetter()->String {
-        let letter = currentWord[currentLetter..currentLetter.succ()]
+        let letter = currentWord[currentLetter...currentLetter]
         
-        currentLetter = currentLetter.succ()
+        currentLetter = currentLetter.successor()
         if (currentLetter == currentWord.endIndex) {
             setCurrentWord()
         }
@@ -49,7 +49,7 @@ class Words {
     }
     
     func wordValue(word : String) -> Int {
-        if (!wordDict[word]) {
+        if (wordDict[word] == nil) {
             return 0
         }
         

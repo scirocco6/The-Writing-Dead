@@ -41,16 +41,9 @@ class Librarian: Character {
         name  = "librarian"
         gait  = 100.0
     }
-
-
-    //
-    // junk needed just to make shiny happy
-    //
-    init(texture: SKTexture!) {
-        super.init(texture: texture)
-    }
     
-    init(texture: SKTexture!, color: NSColor!, size: CGSize) {
-        super.init(texture: texture, color: color, size: size)
+    // more shiny boilerplate
+    required init(coder aDecoder: NSCoder!) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

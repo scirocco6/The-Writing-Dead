@@ -33,14 +33,14 @@ class Character: SKSpriteNode {
     
     var upWalkForever: SKAction = SKAction()
     
-    var walking   = false
-    var direction = heading.down
-    var gait      = 0.0
+    var walking       = false
+    var direction     = heading.down
+    var gait: CGFloat = 0.0
     
     func stop() {
         removeActionForKey("walk")
         walking = false
-        physicsBody.velocity = CGVectorMake(0, 0)
+        physicsBody!.velocity = CGVectorMake(0, 0)
     }
     
     func walk(dir : heading) {
@@ -52,58 +52,49 @@ class Character: SKSpriteNode {
         direction = dir
         walking = true
         
-        var speed = physicsBody.velocity.dx > physicsBody.velocity.dy ? physicsBody.velocity.dx : physicsBody.velocity.dy
+        var speed = physicsBody!.velocity.dx > physicsBody!.velocity.dy ? physicsBody!.velocity.dx : physicsBody!.velocity.dy
         speed = gait > speed ? gait : speed
         
-        runAction(walks[dir], withKey:"walk")
+        runAction(walks[dir]!, withKey:"walk")
 
         switch(dir) {
             case .up:
-                physicsBody.velocity = CGVectorMake(0, speed)
+                physicsBody!.velocity = CGVectorMake(0, speed)
             case .down:
-                physicsBody.velocity = CGVectorMake(0, speed * -1)
+                physicsBody!.velocity = CGVectorMake(0, speed * -1)
             case .left:
-                physicsBody.velocity = CGVectorMake(speed * -1, 0)
+                physicsBody!.velocity = CGVectorMake(speed * -1, 0)
             case .right:
-                physicsBody.velocity = CGVectorMake(speed, 0)
+                physicsBody!.velocity = CGVectorMake(speed, 0)
         }
     }
     
     init(textures: Dictionary<heading, Array<SKTexture>>) {
-        let downTextures = textures[.down] as Array
+        let downTextures = textures[.down]! as Array
         stoppedTexture   = downTextures[downTextures.count - 1]
         
-        super.init(texture: stoppedTexture)
+        super.init(texture: stoppedTexture, color: NSColor.clearColor(), size: stoppedTexture.size())
 
         physicsBody = SKPhysicsBody(rectangleOfSize: frame.size)
-        physicsBody.friction = 0
-        physicsBody.usesPreciseCollisionDetection = true
-        physicsBody.affectedByGravity = false
-        physicsBody.allowsRotation = false
-        physicsBody.linearDamping = 0
+        physicsBody!.friction = 0
+        physicsBody!.usesPreciseCollisionDetection = true
+        physicsBody!.affectedByGravity = false
+        physicsBody!.allowsRotation = false
+        physicsBody!.linearDamping = 0
         
-        let upWalk    = SKAction.animateWithTextures(textures[.up],    timePerFrame:0.3)
-        let downWalk  = SKAction.animateWithTextures(textures[.down],  timePerFrame:0.3)
-        let leftWalk  = SKAction.animateWithTextures(textures[.left],  timePerFrame:0.3)
-        let rightWalk = SKAction.animateWithTextures(textures[.right], timePerFrame:0.3)
+        let upWalk    = SKAction.animateWithTextures(textures[.up]!,    timePerFrame:0.3)
+        let downWalk  = SKAction.animateWithTextures(textures[.down]!,  timePerFrame:0.3)
+        let leftWalk  = SKAction.animateWithTextures(textures[.left]!,  timePerFrame:0.3)
+        let rightWalk = SKAction.animateWithTextures(textures[.right]!, timePerFrame:0.3)
         
         walks[.up]    = SKAction.repeatActionForever(upWalk)
         walks[.down]  = SKAction.repeatActionForever(downWalk)
         walks[.left]  = SKAction.repeatActionForever(leftWalk)
         walks[.right] = SKAction.repeatActionForever(rightWalk)
     }
-//
-// junk needed just to make shiny happy
-//
-    init() {
-        super.init()
-    }
     
-    init(texture: SKTexture!) {
-        super.init(texture: texture)
-    }
-    
-    init(texture: SKTexture!, color: NSColor!, size: CGSize) {
-        super.init(texture: texture, color: color, size: size)
+    // more shiny boilerplate
+    required init(coder aDecoder: NSCoder!) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

@@ -41,13 +41,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let platformCategory  = UInt32(0x01 << 5)
     let titleCategory     = UInt32(0x01 << 6)
     
-    @lazy var librarianHitPlayfield : UInt32 = self.librarianCategory | self.playfieldCategory
-    @lazy var zombieHitPlayfield    : UInt32 = self.zombieCategory    | self.playfieldCategory
-    @lazy var zombieHitLibrarian    : UInt32 = self.zombieCategory    | self.librarianCategory
-    @lazy var catHitPlayfield       : UInt32 = self.catCategory       | self.playfieldCategory
-    @lazy var catHitZombie          : UInt32 = self.catCategory       | self.zombieCategory
-    @lazy var letterHitPlayfield    : UInt32 = self.letterCategory    | self.playfieldCategory
-    @lazy var zombieHitTitle        : UInt32 = self.zombieCategory    | self.titleCategory
+    lazy var librarianHitPlayfield : UInt32 = self.librarianCategory | self.playfieldCategory
+    lazy var zombieHitPlayfield    : UInt32 = self.zombieCategory    | self.playfieldCategory
+    lazy var zombieHitLibrarian    : UInt32 = self.zombieCategory    | self.librarianCategory
+    lazy var catHitPlayfield       : UInt32 = self.catCategory       | self.playfieldCategory
+    lazy var catHitZombie          : UInt32 = self.catCategory       | self.zombieCategory
+    lazy var letterHitPlayfield    : UInt32 = self.letterCategory    | self.playfieldCategory
+    lazy var zombieHitTitle        : UInt32 = self.zombieCategory    | self.titleCategory
     
     override func didMoveToView(view: SKView) {
 // playfield setup
@@ -58,9 +58,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         titleSplash.position                      = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame) + 100)
         titleSplash.physicsBody                   = SKPhysicsBody(rectangleOfSize: titleSplash.frame.size)
-        titleSplash.physicsBody.affectedByGravity = false
-        titleSplash.physicsBody.usesPreciseCollisionDetection = true
+        titleSplash.physicsBody!.affectedByGravity = false
+        titleSplash.physicsBody!.usesPreciseCollisionDetection = true
         addChild(titleSplash)
+        //titleSplash.runAction(SKAction.playSoundFileNamed("words.mp3", waitForCompletion: false))
+
         
         wordBoard.fontSize = 42
         wordBoard.position = CGPointMake(CGRectGetMidX(frame), 25)
@@ -81,12 +83,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let newRect                 = CGRect(x: 0, y: 75, width: frame.width, height: frame.height - 75)
         physicsBody                 = SKPhysicsBody(edgeLoopFromRect: newRect)
-        physicsBody.friction        = 0
-        physicsBody.categoryBitMask = playfieldCategory
+        physicsBody!.friction        = 0
+        physicsBody!.categoryBitMask = playfieldCategory
         
 // player setup
-        librarian.physicsBody.categoryBitMask = librarianCategory
-        librarian.physicsBody.collisionBitMask   = playfieldCategory | zombieCategory       // touching causes event
+        librarian.physicsBody!.categoryBitMask  = librarianCategory
+        librarian.physicsBody!.collisionBitMask = playfieldCategory | zombieCategory       // touching causes event
 
         addZombie()
         addZombie()
@@ -108,12 +110,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func addZombie() {
         let newZombie = Zombie(letter: words.nextLetter())
-        newZombie.physicsBody.categoryBitMask    = zombieCategory
-        newZombie.physicsBody.contactTestBitMask = playfieldCategory | librarianCategory | zombieCategory   // touching causes event
+        newZombie.physicsBody!.categoryBitMask    = zombieCategory
+        newZombie.physicsBody!.contactTestBitMask = playfieldCategory | librarianCategory | zombieCategory   // touching causes event
         
         addChild(newZombie)
         
-        zombieArray += newZombie
+        zombieArray.append(newZombie)
         
         if (zombieDelay > 1) {
             zombieDelay -= 0.001 // reduce the delay between new zombies.  This needs play testing badly level/bonus etc should have an effect
@@ -125,11 +127,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func releaseCat() {
         println("meow!!@");
         let newCat = Cat(from: librarian.position, direction: librarian.direction)
-        newCat.physicsBody.categoryBitMask    = catCategory
-        newCat.physicsBody.contactTestBitMask = playfieldCategory | zombieCategory       // touching causes event
-        newCat.physicsBody.collisionBitMask   = playfieldCategory | zombieCategory       // touching causes event
+        newCat.physicsBody!.categoryBitMask    = catCategory
+        newCat.physicsBody!.contactTestBitMask = playfieldCategory | zombieCategory       // touching causes event
+        newCat.physicsBody!.collisionBitMask   = playfieldCategory | zombieCategory       // touching causes event
         
-        catArray += newCat
+        catArray.append(newCat)
         
         addChild(newCat)
     }
@@ -164,7 +166,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func dropLastLetter() {
-        word = word[word.startIndex..word.endIndex.pred()]
+        word = word[word.startIndex...word.endIndex.predecessor()]
         updateWordBoard()
     }
     
@@ -263,8 +265,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let freeLetter = zombie.die()
                 freeLetter.fontSize = 36
                 freeLetter.physicsBody = SKPhysicsBody(rectangleOfSize: freeLetter.frame.size)
-                freeLetter.physicsBody.categoryBitMask    = letterCategory
-                freeLetter.physicsBody.contactTestBitMask = playfieldCategory
+                freeLetter.physicsBody!.categoryBitMask    = letterCategory
+                freeLetter.physicsBody!.contactTestBitMask = playfieldCategory
                 addChild(freeLetter)
             
                 cat.removeFromParent()

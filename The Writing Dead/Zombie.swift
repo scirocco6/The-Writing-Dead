@@ -43,7 +43,7 @@ class Zombie: Character {
         
         super.init(textures: zombieTextures)
         
-        physicsBody.linearDamping = -0.3
+        physicsBody!.linearDamping = -0.3
         
         setScale(1.10)
         position  = CGPointMake(CGFloat(arc4random_uniform(850)) + 100.0, CGFloat(arc4random_uniform(600)) + 100.0)
@@ -72,13 +72,13 @@ class Zombie: Character {
     func shhh() {
         switch(direction) {
             case .up:
-                physicsBody.velocity = CGVectorMake(0, gait)
+                physicsBody!.velocity = CGVectorMake(0, CGFloat(gait))
             case .down:
-                physicsBody.velocity = CGVectorMake(0, gait * -1)
+                physicsBody!.velocity = CGVectorMake(0, CGFloat(gait * -1))
             case .left:
-                physicsBody.velocity = CGVectorMake(gait * -1, 0)
+                physicsBody!.velocity = CGVectorMake(CGFloat(gait * -1), 0)
             case .right:
-                physicsBody.velocity = CGVectorMake(gait, 0)
+                physicsBody!.velocity = CGVectorMake(CGFloat(gait), 0)
         }
     }
     
@@ -90,14 +90,9 @@ class Zombie: Character {
         
         return letterNode
     }
-//
-// junk needed just to make shiny happy
-//
-    init(texture: SKTexture!) {
-        super.init(texture: texture)
-    }
     
-    init(texture: SKTexture!, color: NSColor!, size: CGSize) {
-        super.init(texture: texture, color: color, size: size)
+    // more shiny boilerplate
+    required init(coder aDecoder: NSCoder!) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

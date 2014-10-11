@@ -15,7 +15,7 @@ extension SKNode {
         
         let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks")
         
-        var sceneData = NSData.dataWithContentsOfFile(path, options: .DataReadingMappedIfSafe, error: nil)
+        var sceneData = NSData.dataWithContentsOfFile(path!, options: .DataReadingMappedIfSafe, error: nil)
         var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
         
         archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
@@ -27,8 +27,8 @@ extension SKNode {
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     
-    @IBOutlet var window: NSWindow
-    @IBOutlet var skView: SKView
+    @IBOutlet var window: NSWindow!
+    @IBOutlet var skView: SKView!
     
     func applicationDidFinishLaunching(aNotification: NSNotification?) {
         /* Pick a size for the scene */

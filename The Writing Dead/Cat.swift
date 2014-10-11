@@ -35,7 +35,7 @@ class Cat: Character {
     init(from: CGPoint, direction: heading) {
         super.init(textures: catTextures)
         
-        physicsBody.linearDamping = -0.7
+        physicsBody!.linearDamping = -0.7
 
         position = from
         zPosition = 2
@@ -45,14 +45,8 @@ class Cat: Character {
     }
     
     
-    //
-    // junk needed just to make shiny happy
-    //
-    init(texture: SKTexture!) {
-        super.init(texture: texture)
-    }
-    
-    init(texture: SKTexture!, color: NSColor!, size: CGSize) {
-        super.init(texture: texture, color: color, size: size)
+    // more shiny boilerplate
+    required init(coder aDecoder: NSCoder!) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

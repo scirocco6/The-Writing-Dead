@@ -11,7 +11,7 @@ import Foundation
 class Words {
     var wordDict    = Dictionary<String, Bool>()
     var wordList    = Array<String>()
-    let totalWords  = 0
+    var totalWords  = 0
     var currentWord = String()
     
     lazy var currentLetter :String.Index  = self.currentWord.startIndex
@@ -21,9 +21,9 @@ class Words {
         let path = NSBundle.mainBundle().pathForResource("Words", ofType: "plist")
         let dict = NSDictionary(contentsOfFile: path!)
         
-        for key : AnyObject in dict.allKeys {
-            let stringKey : String = key as String
-            let keyValue : Bool = dict.valueForKey(stringKey) as Bool
+        for key : AnyObject in dict!.allKeys {
+            let stringKey : String = key as! String
+            let keyValue : Bool = dict!.valueForKey(stringKey) as! Bool
             
             wordDict[stringKey] = keyValue
             wordList.append(stringKey)
@@ -55,7 +55,7 @@ class Words {
         
         var value = 0
 
-        for letter in word.lowercaseString {
+        for letter in word.lowercaseString.characters {
             switch (letter) {
                 case "d", "g":                  value += 2
                 case "b", "c", "m", "p":        value += 3

@@ -24,7 +24,7 @@ class Character: SKSpriteNode {
     ]
     var stoppedTexture = SKTexture()
     
-    let walks: Dictionary<heading, SKAction> = [
+    var walks: Dictionary<heading, SKAction> = [
         .up:    SKAction(),
         .down:  SKAction(),
         .left:  SKAction(),
@@ -92,9 +92,9 @@ class Character: SKSpriteNode {
         walks[.left]  = SKAction.repeatActionForever(leftWalk)
         walks[.right] = SKAction.repeatActionForever(rightWalk)
     }
-    
+
     // more shiny boilerplate
-    required init(coder aDecoder: NSCoder!) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

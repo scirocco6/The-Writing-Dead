@@ -39,7 +39,7 @@ class Zombie: Character {
     let letterNode = Letter(fontNamed:"Dead Font Walking") // this will be the letter the zombie is carrying
 
     init(letter: String) {
-        println("\t\(letter) is for BRAINS!!!!@") // the literate dead? The reading dead?
+        print("\t\(letter) is for BRAINS!!!!@") // the literate dead? The reading dead?
         
         super.init(textures: zombieTextures)
         
@@ -59,7 +59,7 @@ class Zombie: Character {
     }
     
     func randomHeading() -> heading {
-        return(heading.fromRaw(Int(arc4random_uniform(4)))!)
+        return(heading(rawValue: Int(arc4random_uniform(4)))!)
     }
     
     func randomDirection() {
@@ -92,7 +92,7 @@ class Zombie: Character {
     }
     
     // more shiny boilerplate
-    required init(coder aDecoder: NSCoder!) {
+    required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

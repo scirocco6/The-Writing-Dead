@@ -125,7 +125,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func releaseCat() {
-        println("meow!!@");
+        print("meow!!@");
         let newCat = Cat(from: librarian.position, direction: librarian.direction)
         newCat.physicsBody!.categoryBitMask    = catCategory
         newCat.physicsBody!.contactTestBitMask = playfieldCategory | zombieCategory       // touching causes event
@@ -138,12 +138,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func shhh() {
         if(shh == 0) {
-            println("No shh for you!!@")
+            print("No shh for you!!@")
             return()
         }
         shh--
         shhhBoard.text     = "\(shh) :shhH"
-        println("shhh happens")
+        print("shhh happens")
         
         let shhSprite = SKSpriteNode(imageNamed: "Shh")
 
@@ -161,11 +161,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func addLetterToWord(letter: Letter) {
         letter.removeFromParent()
         
-        word += letter.text
+        word += letter.text!
         updateWordBoard()
     }
     
     func dropLastLetter() {
+        // TODO: need to make sure word is present before decrementing
         word = word[word.startIndex...word.endIndex.predecessor()]
         updateWordBoard()
     }
@@ -187,11 +188,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func scoreWord() {
         let value = words.wordValue(word)
         if (value == 0) {
-            println("No \(word) for you!!@")
+            print("No \(word) for you!!@")
             return()
         }
         
-        println("\(word) is a yummy \(word)")
+        print("\(word) is a yummy \(word)")
         
         score += value
         scoreBoard.text = "Score: \(score)"
@@ -222,10 +223,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // contacts and collisions
     func didBeginContact(contact: SKPhysicsContact) {
         if ((contact.bodyA.categoryBitMask == zombieCategory) && (contact.bodyB.categoryBitMask == zombieCategory)) {
-            let zombie1 = contact.bodyA.node as Zombie
+            let zombie1 = contact.bodyA.node as! Zombie
             zombie1.randomDirection()
             
-            let zombie2 = contact.bodyB.node as Zombie
+            let zombie2 = contact.bodyB.node as! Zombie
             zombie2.randomDirection()
         }
         
@@ -233,33 +234,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         switch all {
             case librarianHitPlayfield:
-                println("nope")
+                print("nope")
             
             case zombieHitPlayfield, zombieHitTitle:
-                println("grrr Argh")
-                let zombie : Zombie = contact.bodyA.categoryBitMask == zombieCategory ? contact.bodyA.node as Zombie : contact.bodyB.node as Zombie
+                print("grrr Argh")
+                let zombie : Zombie = contact.bodyA.categoryBitMask == zombieCategory ? contact.bodyA.node as! Zombie : contact.bodyB.node as! Zombie
                 zombie.randomDirection()
             
             case zombieHitLibrarian:
-                println("BRAINS!!@")
+                print("BRAINS!!@")
             
             case catHitPlayfield:
-                println("SPLAT!!@")
+                print("SPLAT!!@")
                 let cat = contact.bodyA.categoryBitMask == catCategory ? contact.bodyA : contact.bodyB
                 cat.node?.removeFromParent()
             
             case catHitZombie:
-                println("meow meow meow")
+                print("meow meow meow")
                 var cat: Cat
                 var zombie: Zombie
             
                 if (contact.bodyA.categoryBitMask == catCategory) {
-                    cat    = contact.bodyA.node as Cat
-                    zombie = contact.bodyB.node as Zombie
+                    cat    = contact.bodyA.node as! Cat
+                    zombie = contact.bodyB.node as! Zombie
                 }
                 else {
-                    zombie = contact.bodyA.node as Zombie
-                    cat    = contact.bodyB.node as Cat
+                    zombie = contact.bodyA.node as! Zombie
+                    cat    = contact.bodyB.node as! Cat
                 }
             
                 let freeLetter = zombie.die()
@@ -272,28 +273,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 cat.removeFromParent()
             
             case letterHitPlayfield:
-                println("....................schlorP")
-                let letter = contact.bodyA.categoryBitMask == letterCategory ? contact.bodyA.node as Letter : contact.bodyB.node as Letter
+                print("....................schlorP")
+                let letter = contact.bodyA.categoryBitMask == letterCategory ? contact.bodyA.node as! Letter : contact.bodyB.node as! Letter
                 addLetterToWord(letter)
             
             default:
-                println("...ping...")
+                print("...ping...")
         }
     }
 }
 
 extension GameScene {
     func handleKeyEvent(event: NSEvent, keyDown down: Bool) {
-        for character in event.characters.unicodeScalars {
+        for character in event.charactersIgnoringModifiers!.unicodeScalars {
             switch character {
                 case "\\": // actually want this to be return but not sure how to specify that here
-                    if (down && !gameOn) {
-                        startGame()
+                    if down {
+                        if !gameOn {
+                            startGame()
+                        }
                     }
-                    else {
-                        // pause feature goes here
-                    }
-                
                 case "w":
                     down ? librarian.walk(Character.heading.up)    : librarian.stop()
                 

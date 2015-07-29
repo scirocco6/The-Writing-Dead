@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Apple. All rights reserved.
 //
 
-import spritekit
+import SpriteKit
 
 class Letter: SKLabelNode {
 }

@@ -25,6 +25,7 @@
 		4F6A31D3195CD6D800D3319A /* Zombie.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A31D0195CD6D800D3319A /* Zombie.xcassets */; };
 		4F6A31D4195CD6D800D3319A /* Cat.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A31D1195CD6D800D3319A /* Cat.xcassets */; };
 		4FCE2160195CE7C10098D1DD /* Letter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCE215F195CE7C10098D1DD /* Letter.swift */; };
+		4FD01FEB1C31C15A00587B00 /* Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD01FEA1C31C15A00587B00 /* Controller.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		4F6A31D0195CD6D800D3319A /* Zombie.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Zombie.xcassets; sourceTree = "<group>"; };
 		4F6A31D1195CD6D800D3319A /* Cat.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Cat.xcassets; sourceTree = "<group>"; };
 		4FCE215F195CE7C10098D1DD /* Letter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Letter.swift; sourceTree = "<group>"; };
+		4FD01FEA1C31C15A00587B00 /* Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Controller.swift; path = ../Controller.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 			children = (
 				4F6A31A4195CD66D00D3319A /* AppDelegate.swift */,
 				4F6A31A6195CD66D00D3319A /* GameScene.swift */,
+				4FD01FEA1C31C15A00587B00 /* Controller.swift */,
 				4F6A31C3195CD6B700D3319A /* Character.swift */,
 				4F6A31C4195CD6B700D3319A /* Zombie.swift */,
 				4F6A31C5195CD6B700D3319A /* Librarian.swift */,
@@ -256,6 +259,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F6A31CB195CD6B700D3319A /* Librarian.swift in Sources */,
+				4FD01FEB1C31C15A00587B00 /* Controller.swift in Sources */,
 				4F6A31CC195CD6B700D3319A /* Cat.swift in Sources */,
 				4F6A31A7195CD66D00D3319A /* GameScene.swift in Sources */,
 				4FCE2160195CE7C10098D1DD /* Letter.swift in Sources */,

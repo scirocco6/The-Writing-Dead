@@ -9,4 +9,5 @@
 import SpriteKit
 
 class Letter: SKLabelNode {
+    var keep = true
 }

@@ -68,7 +68,9 @@ class Zombie: Character {
 
         return
     }
-    
+
+    // TODO: shhh used to just slow all of the zombies down.  Currently it is unused
+    // remove this function is I decide to keep shh as a smart bomb instead of slow down
     func shhh() {
         switch(direction) {
             case .up:

@@ -7,9 +7,8 @@
 //
 
 import SpriteKit
-import QuartzCore // need this to make CIFilter work
 
-class GameScene: SKScene, SKPhysicsContactDelegate {
+class GameScene: SKScene, SKPhysicsContactDelegate, controlDelegate {
     let words       = Words()
     var word        = String()
     
@@ -17,11 +16,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var zombieArray = Array<Zombie>()
     var catArray    = Array<Cat>()
     var shelfArray  = Array<SKSpriteNode>()
-    
+
     var level       = 1
     var score       = 0
+    let maxShh      = 0
     var shh         = 3
-    var zombieDelay = 5.0
+    let maxDelay    = 15.0
+    var zombieDelay = 15.0
     var gameOn      = false
     
     let backgroundTexture = SKTexture(imageNamed: "Library")
@@ -48,21 +49,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     lazy var catHitZombie          : UInt32 = self.catCategory       | self.zombieCategory
     lazy var letterHitPlayfield    : UInt32 = self.letterCategory    | self.playfieldCategory
     lazy var zombieHitTitle        : UInt32 = self.zombieCategory    | self.titleCategory
-    
+
+//#MARK: - controller setup
+    var controller = Controller()
+
     override func didMoveToView(view: SKView) {
-// playfield setup
+        controller.delegate = self
+        
+//#MARK: - playfield setup
         backGround           = SKSpriteNode(texture: backgroundTexture, size: size)
         backGround.position  = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame))
         backGround.zPosition = -1
         addChild(backGround)
         
-        titleSplash.position                      = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame) + 100)
-        titleSplash.physicsBody                   = SKPhysicsBody(rectangleOfSize: titleSplash.frame.size)
+        titleSplash.position    = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame) + 100)
+        titleSplash.physicsBody = SKPhysicsBody(rectangleOfSize: titleSplash.frame.size)
         titleSplash.physicsBody!.affectedByGravity = false
         titleSplash.physicsBody!.usesPreciseCollisionDetection = true
         addChild(titleSplash)
         //titleSplash.runAction(SKAction.playSoundFileNamed("words.mp3", waitForCompletion: false))
-
         
         wordBoard.fontSize = 42
         wordBoard.position = CGPointMake(CGRectGetMidX(frame), 25)
@@ -85,27 +90,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsBody                 = SKPhysicsBody(edgeLoopFromRect: newRect)
         physicsBody!.friction        = 0
         physicsBody!.categoryBitMask = playfieldCategory
-        
-// player setup
+
+//#MARK: - player setup
         librarian.physicsBody!.categoryBitMask  = librarianCategory
         librarian.physicsBody!.collisionBitMask = playfieldCategory | zombieCategory       // touching causes event
 
         addZombie()
-        addZombie()
     }
-    
+
+//#MARK: - game logic
     func startGame() {
-        for zombie in zombieArray { // remove all of the atract mode zombies
+        while let zombie = zombieArray.popLast() { // remove all of the attract mode zombies
             zombie.removeFromParent()
         }
+        
+        zombieDelay = maxDelay
+        shh         = maxShh
+        score       = 0
         
         titleSplash.removeFromParent()
         addChild(librarian)
         addZombie()
-    }
-    
-    override func update(currentTime: CFTimeInterval) { // called BEFORE frame is rendered
-        
     }
     
     func addZombie() {
@@ -142,8 +147,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             return()
         }
         shh--
-        shhhBoard.text     = "\(shh) :shhH"
-        print("shhh happens")
+        shhhBoard.text = "\(shh) :shhH"
+        print("shh happens")
         
         let shhSprite = SKSpriteNode(imageNamed: "Shh")
 
@@ -153,9 +158,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         shhSprite.runAction(SKAction.playSoundFileNamed("shh.mp3", waitForCompletion: false))
         bigifyFadeAndVanish(shhSprite)
         
-        for zombie in zombieArray {
-            zombie.shhh()
+        zombieDelay = maxDelay
+        
+        while let zombie = zombieArray.popLast() { // remove all of the attract mode zombies
+            zombie.letterNode.keep = false
+            killZombie(zombie)
         }
+        
+        // originally shh just slowed all of the zombies down
+        //        for zombie in zombieArray {
+        //    zombie.shhh()
+        //}
     }
     
     func addLetterToWord(letter: Letter) {
@@ -219,8 +232,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         thing.runAction(fade, completion: {thing.removeFromParent()})
     }
     
-    
-    // contacts and collisions
+    func killZombie(zombie: Zombie) {
+        let freeLetter = zombie.die()
+        freeLetter.fontSize = 36
+        freeLetter.physicsBody = SKPhysicsBody(rectangleOfSize: freeLetter.frame.size)
+        freeLetter.physicsBody!.categoryBitMask    = letterCategory
+        freeLetter.physicsBody!.contactTestBitMask = playfieldCategory
+        addChild(freeLetter)
+    }
+
+//# MARK: - contacts and collisions
     func didBeginContact(contact: SKPhysicsContact) {
         if ((contact.bodyA.categoryBitMask == zombieCategory) && (contact.bodyB.categoryBitMask == zombieCategory)) {
             let zombie1 = contact.bodyA.node as! Zombie
@@ -262,28 +283,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     zombie = contact.bodyA.node as! Zombie
                     cat    = contact.bodyB.node as! Cat
                 }
-            
-                let freeLetter = zombie.die()
-                freeLetter.fontSize = 36
-                freeLetter.physicsBody = SKPhysicsBody(rectangleOfSize: freeLetter.frame.size)
-                freeLetter.physicsBody!.categoryBitMask    = letterCategory
-                freeLetter.physicsBody!.contactTestBitMask = playfieldCategory
-                addChild(freeLetter)
-            
+                
+                killZombie(zombie)
                 cat.removeFromParent()
             
             case letterHitPlayfield:
                 print("....................schlorP")
                 let letter = contact.bodyA.categoryBitMask == letterCategory ? contact.bodyA.node as! Letter : contact.bodyB.node as! Letter
-                addLetterToWord(letter)
+                letter.keep ? addLetterToWord(letter) : letter.removeFromParent()
             
             default:
                 print("...ping...")
         }
     }
-}
+    
+//# MARK: - controlDelegate
+    func pause() {
+        self.paused = self.paused ? false : true
+        self.paused ? print("*PAUSE*") : print("*resumed*")
+    }
 
-extension GameScene {
+//# MARK: - input handling
     func handleKeyEvent(event: NSEvent, keyDown down: Bool) {
         for character in event.charactersIgnoringModifiers!.unicodeScalars {
             switch character {
@@ -317,11 +337,14 @@ extension GameScene {
                 case "n":
                     down ? dropLastLetter()  : ()
                 
-                case "b":
-                    down ? toggleBackground() : ()
-                
                 case "m":
                     down ? scoreWord() : ()
+                
+                case "p":
+                    down ? pause() : ()
+                
+                case "b":
+                    down ? toggleBackground() : ()
                 
                 default: ()
             }

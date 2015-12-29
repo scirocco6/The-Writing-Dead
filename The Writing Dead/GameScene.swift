@@ -19,10 +19,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, controlDelegate {
 
     var level       = 1
     var score       = 0
-    let maxShh      = 0
-    var shh         = 3
-    let maxDelay    = 15.0
-    var zombieDelay = 15.0
+    let maxShh      = 3
+    var shh         = 0
+    let maxDelay    = 10.0
+    var zombieDelay = 10.0
     var gameOn      = false
     
     let backgroundTexture = SKTexture(imageNamed: "Library")
@@ -86,8 +86,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, controlDelegate {
 
         physicsWorld.contactDelegate = self
         
-        let newRect                 = CGRect(x: 0, y: 75, width: frame.width, height: frame.height - 75)
-        physicsBody                 = SKPhysicsBody(edgeLoopFromRect: newRect)
+        let newRect                  = CGRect(x: 0, y: 75, width: frame.width, height: frame.height - 75)
+        physicsBody                  = SKPhysicsBody(edgeLoopFromRect: newRect)
         physicsBody!.friction        = 0
         physicsBody!.categoryBitMask = playfieldCategory
 
@@ -106,6 +106,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, controlDelegate {
         
         zombieDelay = maxDelay
         shh         = maxShh
+        shhhBoard.text = "\(shh) :shhH"
         score       = 0
         
         titleSplash.removeFromParent()
@@ -119,7 +120,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, controlDelegate {
         newZombie.physicsBody!.contactTestBitMask = playfieldCategory | librarianCategory | zombieCategory   // touching causes event
         
         addChild(newZombie)
-        
         zombieArray.append(newZombie)
         
         if (zombieDelay > 1) {
@@ -177,10 +177,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, controlDelegate {
         word += letter.text!
         updateWordBoard()
     }
-    
+
     func dropLastLetter() {
-        // TODO: need to make sure word is present before decrementing
-        word = word[word.startIndex...word.endIndex.predecessor()]
+        if word.isEmpty { return }
+
+        word.removeAtIndex(word.endIndex.predecessor())
         updateWordBoard()
     }
     
@@ -210,6 +211,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, controlDelegate {
         score += value
         scoreBoard.text = "Score: \(score)"
         
+        let bigWord = wordBoard.copy() as! SKNode
+        addChild(bigWord)
+        bigifyFadeAndVanish(bigWord)
+        
         word = ""
         updateWordBoard()
     }
@@ -225,7 +230,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, controlDelegate {
         }
     }
     
-    func bigifyFadeAndVanish(thing: SKSpriteNode) {
+    func bigifyFadeAndVanish(thing: SKNode) {
         let bigify = SKAction.scaleTo(10,   duration: 0.5)
         let fade   = SKAction.fadeOutWithDuration(0.5)
         thing.runAction(bigify)

@@ -12,12 +12,16 @@ protocol controlDelegate: class {
     func shhh()
     func releaseCat()
     func addZombie()
+    func dropLastLetter()
+    func scoreWord()
 }
 
 class Controller {
     weak var delegate: controlDelegate?
 
     var controller: GCController?
+    var dx: Float = 0.0
+    var dy: Float = 0.0
     
     init() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleControllerDidConnectNotification:",    name: GCControllerDidConnectNotification,    object: nil)
@@ -40,6 +44,7 @@ class Controller {
                 //pad.buttonB
                 //pad.buttonX
                 //pad.buttonY
+                pad.dpad.valueChangedHandler = dpad
             }
         }
     }
@@ -71,6 +76,35 @@ class Controller {
     func buttonA(button: GCControllerButtonInput, value: Float,  pressed: Bool) {
         if pressed {
             delegate?.addZombie()
+        }
+    }
+    
+    func dpad(pad: GCControllerDirectionPad, x: Float, y: Float) {
+        print("x: \(x)\ty: \(y)")
+        if x == 0.0 && dx != 0.0 {
+            dx = 0.0
+        }
+        else if x != 0.0 && dx == 0.0 {
+            dx = x
+            if x < 0.0 { // #MARK: dpad left
+                //TODO: left dpad input
+            }
+            else { // #MARK: dpad right
+                //TODO: right dpad input
+            }
+        }
+        
+        if y == 0.0 && dy != 0.0 {
+            dy = 0.0
+        }
+        else if y != 0.0 && dy == 0.0 {
+            dy = y
+            if y < 0.0 { // #MARK: dpad down
+                delegate?.dropLastLetter()
+            }
+            else { // #MARK: dpad up
+                delegate?.scoreWord()
+            }
         }
     }
 }

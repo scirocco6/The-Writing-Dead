@@ -15,12 +15,13 @@
 Gamepad use is currently a work in progress
 
 Keyboard
-* ****\ to start a new game
-* ****wasd to move                    }
-* ****space ****bar to release a cat
-* ****2 to shhh
-* ****n to drop the last letter of your word
-* ****m to score your current word
-* ****p to pause the game
-* ****z to add a zombie
-* ****b to toggle the background 
+
+* **/** to start a new game
+* **wasd** to move                    }
+* **space bar** to release a cat
+* **2** to shhh
+* **n** to drop the last letter of your word
+* **m** to score your current word
+* **p** to pause the game
+* **z** to add a zombie
+* **b** to toggle the background

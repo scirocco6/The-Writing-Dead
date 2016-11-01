@@ -46,7 +46,7 @@ class Zombie: Character {
         physicsBody!.linearDamping = -0.3
         
         setScale(1.10)
-        position  = CGPointMake(CGFloat(arc4random_uniform(850)) + 100.0, CGFloat(arc4random_uniform(600)) + 100.0)
+        position  = CGPoint(x: CGFloat(arc4random_uniform(850)) + 100.0, y: CGFloat(arc4random_uniform(600)) + 100.0)
         name      = "zombie"
         gait      = 30.0
         direction = randomHeading()
@@ -74,13 +74,13 @@ class Zombie: Character {
     func shhh() {
         switch(direction) {
             case .up:
-                physicsBody!.velocity = CGVectorMake(0, CGFloat(gait))
+                physicsBody!.velocity = CGVector(dx: 0, dy: CGFloat(gait))
             case .down:
-                physicsBody!.velocity = CGVectorMake(0, CGFloat(gait * -1))
+                physicsBody!.velocity = CGVector(dx: 0, dy: CGFloat(gait * -1))
             case .left:
-                physicsBody!.velocity = CGVectorMake(CGFloat(gait * -1), 0)
+                physicsBody!.velocity = CGVector(dx: CGFloat(gait * -1), dy: 0)
             case .right:
-                physicsBody!.velocity = CGVectorMake(CGFloat(gait), 0)
+                physicsBody!.velocity = CGVector(dx: CGFloat(gait), dy: 0)
         }
     }
     

@@ -18,17 +18,11 @@ class Words {
 
     
     init() {
-        let path = NSBundle.mainBundle().pathForResource("Words", ofType: "plist")
-        let dict = NSDictionary(contentsOfFile: path!)
-        
-        for key : AnyObject in dict!.allKeys {
-            let stringKey : String = key as! String
-            let keyValue : Bool = dict!.valueForKey(stringKey) as! Bool
-            
-            wordDict[stringKey] = keyValue
-            wordList.append(stringKey)
-            totalWords++
-        }
+        let path = Bundle.main.path(forResource: "Words", ofType: "plist")
+        wordDict = NSDictionary(contentsOfFile: path!) as! Dictionary<String, Bool>
+        wordList = Array(wordDict.keys)
+        totalWords = wordList.count
+
         setCurrentWord()
     }
     
@@ -40,7 +34,7 @@ class Words {
     func nextLetter()->String {
         let letter = currentWord[currentLetter...currentLetter]
         
-        currentLetter = currentLetter.successor()
+        currentLetter = currentWord.index(after: currentLetter)        
         if (currentLetter == currentWord.endIndex) {
             setCurrentWord()
         }
@@ -48,14 +42,14 @@ class Words {
         return letter
     }
     
-    func wordValue(word : String) -> Int {
+    func wordValue(_ word : String) -> Int {
         if (wordDict[word] == nil) {
             return 0
         }
         
         var value = 0
 
-        for letter in word.lowercaseString.characters {
+        for letter in word.lowercased().characters {
             switch (letter) {
                 case "d", "g":                  value += 2
                 case "b", "c", "m", "p":        value += 3

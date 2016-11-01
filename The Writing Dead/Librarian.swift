@@ -36,7 +36,7 @@ class Librarian: Character {
         super.init(textures: librarianTextures)
 
         setScale(0.85)
-        position = CGPointMake(100, 100)
+        position = CGPoint(x: 100, y: 100)
         zPosition = 3
         name  = "librarian"
         gait  = 100.0

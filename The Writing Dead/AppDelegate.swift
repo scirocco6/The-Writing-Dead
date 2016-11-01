@@ -11,21 +11,21 @@ import Cocoa
 import SpriteKit
 
 extension SKNode {
-    class func unarchiveFromFile(file : NSString) -> SKNode? {
+    class func unarchiveFromFile(_ file : NSString) -> SKNode? {
         
-        let path = NSBundle.mainBundle().pathForResource(file as String, ofType: "sks")
+        let path = Bundle.main.path(forResource: file as String, ofType: "sks")
 
-        var sceneData: NSData?
+        var sceneData: Data?
         do {
-            sceneData = try NSData(contentsOfFile: path!, options: .DataReadingMappedIfSafe)
+            sceneData = try Data(contentsOf: URL(fileURLWithPath: path!), options: .mappedIfSafe)
         } catch _ {
             sceneData = nil
         }
         
-        let archiver  = NSKeyedUnarchiver(forReadingWithData: sceneData!)
+        let archiver  = NSKeyedUnarchiver(forReadingWith: sceneData!)
         
         archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
-        let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as! GameScene
+        let scene = archiver.decodeObject(forKey: NSKeyedArchiveRootObjectKey) as! GameScene
         archiver.finishDecoding()
         return scene
     }
@@ -36,11 +36,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet var window: NSWindow!
     @IBOutlet var skView: SKView!
     
-    func applicationDidFinishLaunching(aNotification: NSNotification) {
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
         /* Pick a size for the scene */
         if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
             /* Set the scale mode to scale to fit the window */
-            scene.scaleMode = .AspectFill
+            scene.scaleMode = .aspectFill
             
             self.skView!.presentScene(scene)
             
@@ -51,7 +51,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-    func applicationShouldTerminateAfterLastWindowClosed(sender: NSApplication) -> Bool {
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         return true;
     }
 }

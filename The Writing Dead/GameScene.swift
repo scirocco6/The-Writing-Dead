@@ -53,41 +53,41 @@ class GameScene: SKScene, SKPhysicsContactDelegate, controlDelegate {
 //#MARK: - controller setup
     var controller = Controller()
 
-    override func didMoveToView(view: SKView) {
+    override func didMove(to view: SKView) {
         controller.delegate = self
         
 //#MARK: - playfield setup
         backGround           = SKSpriteNode(texture: backgroundTexture, size: size)
-        backGround.position  = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame))
+        backGround.position  = CGPoint(x: frame.midX, y: frame.midY)
         backGround.zPosition = -1
         addChild(backGround)
         
-        titleSplash.position    = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame) + 100)
-        titleSplash.physicsBody = SKPhysicsBody(rectangleOfSize: titleSplash.frame.size)
+        titleSplash.position    = CGPoint(x: frame.midX, y: frame.midY + 100)
+        titleSplash.physicsBody = SKPhysicsBody(rectangleOf: titleSplash.frame.size)
         titleSplash.physicsBody!.affectedByGravity = false
         titleSplash.physicsBody!.usesPreciseCollisionDetection = true
         addChild(titleSplash)
         //titleSplash.runAction(SKAction.playSoundFileNamed("words.mp3", waitForCompletion: false))
         
         wordBoard.fontSize = 42
-        wordBoard.position = CGPointMake(CGRectGetMidX(frame), 25)
+        wordBoard.position = CGPoint(x: frame.midX, y: 25)
         wordBoard.text     = word
         addChild(wordBoard)
         
-        scoreBoard.position = CGPointMake(10, 5)
+        scoreBoard.position = CGPoint(x: 10, y: 5)
         scoreBoard.text     = "Score: \(score)"
-        scoreBoard.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left
+        scoreBoard.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
         addChild(scoreBoard)
         
-        shhhBoard.position = CGPointMake(890, 5)
+        shhhBoard.position = CGPoint(x: 890, y: 5)
         shhhBoard.text     = "\(shh) :shhH"
-        shhhBoard.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left
+        shhhBoard.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
         addChild(shhhBoard)
 
         physicsWorld.contactDelegate = self
         
         let newRect                  = CGRect(x: 0, y: 75, width: frame.width, height: frame.height - 75)
-        physicsBody                  = SKPhysicsBody(edgeLoopFromRect: newRect)
+        physicsBody                  = SKPhysicsBody(edgeLoopFrom: newRect)
         physicsBody!.friction        = 0
         physicsBody!.categoryBitMask = playfieldCategory
 
@@ -126,7 +126,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, controlDelegate {
             zombieDelay -= 0.001 // reduce the delay between new zombies.  This needs play testing badly level/bonus etc should have an effect
         }
         // wait a while then add another zombie
-        runAction(SKAction.waitForDuration(zombieDelay), completion: {self.addZombie()})
+        run(SKAction.wait(forDuration: zombieDelay), completion: {self.addZombie()})
     }
     
     func releaseCat() {
@@ -146,7 +146,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, controlDelegate {
             print("No shh for you!!@")
             return()
         }
-        shh--
+        shh -= 1
         shhhBoard.text = "\(shh) :shhH"
         print("shh happens")
         
@@ -155,7 +155,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, controlDelegate {
         shhSprite.setScale(0.1)
         shhSprite.position = backGround.position
         addChild(shhSprite)
-        shhSprite.runAction(SKAction.playSoundFileNamed("shh.mp3", waitForCompletion: false))
+        shhSprite.run(SKAction.playSoundFileNamed("shh.mp3", waitForCompletion: false))
         bigifyFadeAndVanish(shhSprite)
         
         zombieDelay = maxDelay
@@ -171,7 +171,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, controlDelegate {
         //}
     }
     
-    func addLetterToWord(letter: Letter) {
+    func addLetterToWord(_ letter: Letter) {
         letter.removeFromParent()
         
         word += letter.text!
@@ -181,7 +181,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, controlDelegate {
     func dropLastLetter() {
         if word.isEmpty { return }
 
-        word.removeAtIndex(word.endIndex.predecessor())
+        word.remove(at: word.index(before: word.endIndex))
         updateWordBoard()
     }
     
@@ -190,9 +190,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, controlDelegate {
         
         switch(words.wordValue(word)) {
         case 0:
-            wordBoard.fontColor = SKColor.redColor()
+            wordBoard.fontColor = SKColor.red
         case 1...9:
-            wordBoard.fontColor = SKColor.greenColor()
+            wordBoard.fontColor = SKColor.green
         case 10...49:
             wordBoard.fontColor = SKColor(red: 0.988, green: 0.851, blue: 0.459, alpha: 1.0)
         default: ()
@@ -230,24 +230,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate, controlDelegate {
         }
     }
     
-    func bigifyFadeAndVanish(thing: SKNode) {
-        let bigify = SKAction.scaleTo(10,   duration: 0.5)
-        let fade   = SKAction.fadeOutWithDuration(0.5)
-        thing.runAction(bigify)
-        thing.runAction(fade, completion: {thing.removeFromParent()})
+    func bigifyFadeAndVanish(_ thing: SKNode) {
+        let bigify = SKAction.scale(to: 10,   duration: 0.5)
+        let fade   = SKAction.fadeOut(withDuration: 0.5)
+        thing.run(bigify)
+        thing.run(fade, completion: {thing.removeFromParent()})
     }
     
-    func killZombie(zombie: Zombie) {
+    func killZombie(_ zombie: Zombie) {
         let freeLetter = zombie.die()
         freeLetter.fontSize = 36
-        freeLetter.physicsBody = SKPhysicsBody(rectangleOfSize: freeLetter.frame.size)
+        freeLetter.physicsBody = SKPhysicsBody(rectangleOf: freeLetter.frame.size)
         freeLetter.physicsBody!.categoryBitMask    = letterCategory
         freeLetter.physicsBody!.contactTestBitMask = playfieldCategory
         addChild(freeLetter)
     }
 
 //# MARK: - contacts and collisions
-    func didBeginContact(contact: SKPhysicsContact) {
+    func didBegin(_ contact: SKPhysicsContact) {
         if ((contact.bodyA.categoryBitMask == zombieCategory) && (contact.bodyB.categoryBitMask == zombieCategory)) {
             let zombie1 = contact.bodyA.node as! Zombie
             zombie1.randomDirection()
@@ -304,12 +304,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, controlDelegate {
     
 //# MARK: - controlDelegate
     func pause() {
-        self.paused = self.paused ? false : true
-        self.paused ? print("*PAUSE*") : print("*resumed*")
+        self.isPaused = self.isPaused ? false : true
+        self.isPaused ? print("*PAUSE*") : print("*resumed*")
     }
 
 //# MARK: - input handling
-    func handleKeyEvent(event: NSEvent, keyDown down: Bool) {
+    func handleKeyEvent(_ event: NSEvent, keyDown down: Bool) {
         for character in event.charactersIgnoringModifiers!.unicodeScalars {
             switch character {
                 case "\\": // actually want this to be return but not sure how to specify that here
@@ -356,11 +356,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, controlDelegate {
         }
     }
     
-    override func keyDown(event: NSEvent) {
+    override func keyDown(with event: NSEvent) {
         handleKeyEvent(event, keyDown: true)
     }
     
-    override func keyUp(event: NSEvent) {
+    override func keyUp(with event: NSEvent) {
         handleKeyEvent(event, keyDown: false)
     }
 }

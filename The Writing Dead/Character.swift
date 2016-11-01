@@ -38,34 +38,34 @@ class Character: SKSpriteNode {
     var gait: CGFloat = 0.0
     
     func stop() {
-        removeActionForKey("walk")
+        removeAction(forKey: "walk")
         walking = false
-        physicsBody!.velocity = CGVectorMake(0, 0)
+        physicsBody!.velocity = CGVector(dx: 0, dy: 0)
     }
     
-    func walk(dir : heading) {
+    func walk(_ dir : heading) {
         if (direction == dir && walking == true) { // if already walking that direction just keep walking
             return
         }
         
-        removeActionForKey("walk")
+        removeAction(forKey: "walk")
         direction = dir
         walking = true
         
         var speed = physicsBody!.velocity.dx > physicsBody!.velocity.dy ? physicsBody!.velocity.dx : physicsBody!.velocity.dy
         speed = gait > speed ? gait : speed
         
-        runAction(walks[dir]!, withKey:"walk")
+        run(walks[dir]!, withKey:"walk")
 
         switch(dir) {
             case .up:
-                physicsBody!.velocity = CGVectorMake(0, speed)
+                physicsBody!.velocity = CGVector(dx: 0, dy: speed)
             case .down:
-                physicsBody!.velocity = CGVectorMake(0, speed * -1)
+                physicsBody!.velocity = CGVector(dx: 0, dy: speed * -1)
             case .left:
-                physicsBody!.velocity = CGVectorMake(speed * -1, 0)
+                physicsBody!.velocity = CGVector(dx: speed * -1, dy: 0)
             case .right:
-                physicsBody!.velocity = CGVectorMake(speed, 0)
+                physicsBody!.velocity = CGVector(dx: speed, dy: 0)
         }
     }
     
@@ -73,24 +73,24 @@ class Character: SKSpriteNode {
         let downTextures = textures[.down]! as Array
         stoppedTexture   = downTextures[downTextures.count - 1]
         
-        super.init(texture: stoppedTexture, color: NSColor.clearColor(), size: stoppedTexture.size())
+        super.init(texture: stoppedTexture, color: NSColor.clear, size: stoppedTexture.size())
 
-        physicsBody = SKPhysicsBody(rectangleOfSize: frame.size)
+        physicsBody = SKPhysicsBody(rectangleOf: frame.size)
         physicsBody!.friction = 0
         physicsBody!.usesPreciseCollisionDetection = true
         physicsBody!.affectedByGravity = false
         physicsBody!.allowsRotation = false
         physicsBody!.linearDamping = 0
         
-        let upWalk    = SKAction.animateWithTextures(textures[.up]!,    timePerFrame:0.3)
-        let downWalk  = SKAction.animateWithTextures(textures[.down]!,  timePerFrame:0.3)
-        let leftWalk  = SKAction.animateWithTextures(textures[.left]!,  timePerFrame:0.3)
-        let rightWalk = SKAction.animateWithTextures(textures[.right]!, timePerFrame:0.3)
+        let upWalk    = SKAction.animate(with: textures[.up]!,    timePerFrame:0.3)
+        let downWalk  = SKAction.animate(with: textures[.down]!,  timePerFrame:0.3)
+        let leftWalk  = SKAction.animate(with: textures[.left]!,  timePerFrame:0.3)
+        let rightWalk = SKAction.animate(with: textures[.right]!, timePerFrame:0.3)
         
-        walks[.up]    = SKAction.repeatActionForever(upWalk)
-        walks[.down]  = SKAction.repeatActionForever(downWalk)
-        walks[.left]  = SKAction.repeatActionForever(leftWalk)
-        walks[.right] = SKAction.repeatActionForever(rightWalk)
+        walks[.up]    = SKAction.repeatForever(upWalk)
+        walks[.down]  = SKAction.repeatForever(downWalk)
+        walks[.left]  = SKAction.repeatForever(leftWalk)
+        walks[.right] = SKAction.repeatForever(rightWalk)
     }
 
     // more shiny boilerplate

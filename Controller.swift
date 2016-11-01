@@ -24,17 +24,17 @@ class Controller {
     var dy: Float = 0.0
     
     init() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleControllerDidConnectNotification:",    name: GCControllerDidConnectNotification,    object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleControllerDidDisconnectNotification:", name: GCControllerDidDisconnectNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(Controller.handleControllerDidConnectNotification(_:)),    name: NSNotification.Name.GCControllerDidConnect,    object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(Controller.handleControllerDidDisconnectNotification(_:)), name: NSNotification.Name.GCControllerDidDisconnect, object: nil)
     }
     
-    @objc func handleControllerDidConnectNotification(notification: NSNotification) {
+    @objc func handleControllerDidConnectNotification(_ notification: Notification) {
         //let connectedGameController = notification.object as! GCController
         
         controller = GCController.controllers().first
         if controller != nil {
             print("Controller detected")
-            controller!.playerIndex = GCControllerPlayerIndex.Index1
+            controller!.playerIndex = GCControllerPlayerIndex.index1
             controller!.controllerPausedHandler = handleControllerDidPause
             
             if let pad = controller?.extendedGamepad {
@@ -49,7 +49,7 @@ class Controller {
         }
     }
     
-    @objc func handleControllerDidDisconnectNotification(notification: NSNotification) {
+    @objc func handleControllerDidDisconnectNotification(_ notification: Notification) {
         let disconnectedGameController = notification.object as! GCController
         
         if disconnectedGameController == controller {
@@ -57,29 +57,29 @@ class Controller {
         }
     }
     
-    func handleControllerDidPause(controller: GCController) {
+    func handleControllerDidPause(_ controller: GCController) {
         delegate?.pause()
     }
     
-    func leftTrigger(button: GCControllerButtonInput, value: Float,  pressed: Bool) {
+    func leftTrigger(_ button: GCControllerButtonInput, value: Float,  pressed: Bool) {
         if pressed {
             delegate?.shhh()
         }
     }
     
-    func rightTrigger(button: GCControllerButtonInput, value: Float,  pressed: Bool) {
+    func rightTrigger(_ button: GCControllerButtonInput, value: Float,  pressed: Bool) {
         if pressed {
             delegate?.releaseCat()
         }
     }
     
-    func buttonA(button: GCControllerButtonInput, value: Float,  pressed: Bool) {
+    func buttonA(_ button: GCControllerButtonInput, value: Float,  pressed: Bool) {
         if pressed {
             delegate?.addZombie()
         }
     }
     
-    func dpad(pad: GCControllerDirectionPad, x: Float, y: Float) {
+    func dpad(_ pad: GCControllerDirectionPad, x: Float, y: Float) {
         print("x: \(x)\ty: \(y)")
         if x == 0.0 && dx != 0.0 {
             dx = 0.0

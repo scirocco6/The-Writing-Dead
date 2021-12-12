@@ -9,6 +9,8 @@
 import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate, controlDelegate {
+
+//#MARK: - variable setup
     let words       = Words()
     var word        = String()
     

@@ -39,7 +39,7 @@ class Words {
             setCurrentWord()
         }
         
-        return letter
+        return String(letter)
     }
     
     func wordValue(_ word : String) -> Int {

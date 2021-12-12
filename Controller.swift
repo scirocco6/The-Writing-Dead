@@ -7,7 +7,7 @@
 //
 import GameController
 
-protocol controlDelegate: class {
+protocol controlDelegate: AnyObject {
     func pause()
     func shhh()
     func releaseCat()

@@ -149,6 +149,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, controlDelegate {
             return()
         }
         shh -= 1
+        doShhh()
+    }
+    
+    func doShhh() {
         shhhBoard.text = "\(shh) :shhH"
         print("shh happens")
         
@@ -216,6 +220,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, controlDelegate {
         let bigWord = wordBoard.copy() as! SKNode
         addChild(bigWord)
         bigifyFadeAndVanish(bigWord)
+        doShhh()
         
         word = ""
         updateWordBoard()
@@ -303,14 +308,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, controlDelegate {
                 print("...ping...")
         }
     }
-    
-//# MARK: - controlDelegate
-    func pause() {
-        self.isPaused = self.isPaused ? false : true
-        self.isPaused ? print("*PAUSE*") : print("*resumed*")
-    }
 
-//# MARK: - input handling
+//# MARK: - keyboard handling
     func handleKeyEvent(_ event: NSEvent, keyDown down: Bool) {
         for character in event.charactersIgnoringModifiers!.unicodeScalars {
             switch character {
@@ -321,16 +320,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate, controlDelegate {
                         }
                     }
                 case "w":
-                    down ? librarian.walk(Character.heading.up)    : librarian.stop()
+                    down ? goUp()    : librarian.stop()
                 
                 case "a":
-                    down ? librarian.walk(Character.heading.left)  : librarian.stop()
+                    down ? goLeft()  : librarian.stop()
                 
                 case "d":
-                    down ? librarian.walk(Character.heading.right) : librarian.stop()
+                    down ? goRight() : librarian.stop()
                 
                 case "s":
-                    down ? librarian.walk(Character.heading.down)  : librarian.stop()
+                    down ? goDown()  : librarian.stop()
                 
                 case " ":
                     down ? releaseCat() : ()
@@ -358,12 +357,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate, controlDelegate {
         }
     }
     
+//# MARK: - controlDelegate
+    func pause() {
+        self.isPaused = self.isPaused ? false : true
+        self.isPaused ? print("*PAUSE*") : print("*resumed*")
+    }
+    
     override func keyDown(with event: NSEvent) {
         handleKeyEvent(event, keyDown: true)
     }
     
     override func keyUp(with event: NSEvent) {
         handleKeyEvent(event, keyDown: false)
+    }
+//# MARK: - librarian walk
+    func goLeft() {
+        librarian.walk(Character.heading.left)
+    }
+    func goRight() {
+        librarian.walk(Character.heading.right)
+    }
+    func goUp() {
+        librarian.walk(Character.heading.up)
+    }
+    func goDown() {
+        librarian.walk(Character.heading.down)
+    }
+    func goStop() {
+        librarian.stop()
     }
 }
 

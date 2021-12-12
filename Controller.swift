@@ -14,14 +14,17 @@ protocol controlDelegate: AnyObject {
     func addZombie()
     func dropLastLetter()
     func scoreWord()
+    func goLeft()
+    func goRight()
+    func goUp()
+    func goDown()
+    func goStop()
 }
 
 class Controller {
     weak var delegate: controlDelegate?
 
     var controller: GCController?
-    var dx: Float = 0.0
-    var dy: Float = 0.0
     
     init() {
         NotificationCenter.default.addObserver(self, selector: #selector(Controller.handleControllerDidConnectNotification(_:)),    name: NSNotification.Name.GCControllerDidConnect,    object: nil)
@@ -72,38 +75,45 @@ class Controller {
             delegate?.releaseCat()
         }
     }
-    
+
+//# MARK: - buttins
     func buttonA(_ button: GCControllerButtonInput, value: Float,  pressed: Bool) {
+        if pressed {
+            delegate?.dropLastLetter()
+        }
+    }
+    
+    func buttonB(_ button: GCControllerButtonInput, value: Float,  pressed: Bool) {
         if pressed {
             delegate?.addZombie()
         }
     }
     
-    func dpad(_ pad: GCControllerDirectionPad, x: Float, y: Float) {
-        print("x: \(x)\ty: \(y)")
-        if x == 0.0 && dx != 0.0 {
-            dx = 0.0
+    func buttonX(_ button: GCControllerButtonInput, value: Float,  pressed: Bool) {
+        if pressed {
+            delegate?.scoreWord()
         }
-        else if x != 0.0 && dx == 0.0 {
-            dx = x
+    }
+
+//# MARK: - dpad
+    func dpad(_ pad: GCControllerDirectionPad, x: Float, y: Float) {
+        if x == 0.0 && y == 0.0 {
+            delegate?.goStop()
+        }
+        else if x != 0.0 {
             if x < 0.0 { // #MARK: dpad left
-                //TODO: left dpad input
+                delegate?.goLeft()
             }
             else { // #MARK: dpad right
-                //TODO: right dpad input
+                delegate?.goRight()
             }
         }
-        
-        if y == 0.0 && dy != 0.0 {
-            dy = 0.0
-        }
-        else if y != 0.0 && dy == 0.0 {
-            dy = y
+        else if y != 0.0 {
             if y < 0.0 { // #MARK: dpad down
-                delegate?.dropLastLetter()
+                delegate?.goDown()
             }
             else { // #MARK: dpad up
-                delegate?.scoreWord()
+                delegate?.goUp()
             }
         }
     }

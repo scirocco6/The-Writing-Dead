@@ -47,9 +47,8 @@ class Words {
             return 0
         }
         
-        var value = 0
-
-        for letter in word.lowercased().characters {
+        var value = 0        
+        word.lowercased().forEach { letter in
             switch (letter) {
                 case "d", "g":                  value += 2
                 case "b", "c", "m", "p":        value += 3

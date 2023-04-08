@@ -16,7 +16,7 @@
 Gamepad use is currently a work in progress
 
 ### Keyboard ###
-* **/** to start a new game
+* **\** to start a new game
 * **wasd** to move                    }
 * **space bar** to release a cat
 * **2** to shhh
